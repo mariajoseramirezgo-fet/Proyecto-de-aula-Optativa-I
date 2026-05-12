@@ -42,7 +42,7 @@ $resDisponibles = mysqli_query($conexion, $sqlDisponibles);
 $totalDisponibles = mysqli_fetch_assoc($resDisponibles)['total'] ?? 0;
 
 /* =========================
-   ALQUILADOS
+    ALQUILADOS
 ========================= */
 
 $sqlAlquilados = "
@@ -55,7 +55,7 @@ $resAlquilados = mysqli_query($conexion, $sqlAlquilados);
 $totalAlquilados = mysqli_fetch_assoc($resAlquilados)['total'] ?? 0;
 
 /* =========================
-   TOTAL TICKETS
+    TOTAL TICKETS
 ========================= */
 
 $sqlTickets = "
@@ -68,7 +68,7 @@ $resTickets = mysqli_query($conexion, $sqlTickets);
 $totalTickets = mysqli_fetch_assoc($resTickets)['total'] ?? 0;
 
 /* =========================
-   DATOS GRÁFICA ALQUILERES
+    DATOS GRÁFICA ALQUILERES
 ========================= */
 
 $datosGrafica = [];
@@ -115,7 +115,7 @@ $datosGrafica = [
 ];
 
 /* =========================
-   STOCK BAJO
+    STOCK BAJO
 ========================= */
 
 $sqlStock = "
@@ -128,7 +128,7 @@ LIMIT 5
 $resStock = mysqli_query($conexion, $sqlStock);
 
 /* =========================
-   TICKETS RECIENTES
+    TICKETS RECIENTES
 ========================= */
 
 $sqlTicketLista = "

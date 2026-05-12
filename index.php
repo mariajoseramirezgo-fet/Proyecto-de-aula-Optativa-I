@@ -1,5 +1,4 @@
 <?php
-// Si quieres luego manejar sesiones
 session_start();
 
 ?>

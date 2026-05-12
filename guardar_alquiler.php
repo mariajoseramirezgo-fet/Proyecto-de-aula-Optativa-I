@@ -13,18 +13,18 @@ $cantidad = $_POST['cantidad'];
 $fecha_inicio = $_POST['fecha_inicio'];
 $fecha_fin = $_POST['fecha_fin'];
 
-// 👇 calcular días
+// calcular días
 $inicio = new DateTime($fecha_inicio);
 $fin = new DateTime($fecha_fin);
 $dias = $inicio->diff($fin)->days + 1;
 
-// 👇 precio producto
+//  precio producto
 $p = $conn->query("SELECT precio_venta FROM producto WHERE id_producto=$id_producto")
-          ->fetch_assoc();
+            ->fetch_assoc();
 
 $precio = $p['precio_venta'];
 
-// 👇 subtotal
+// subtotal
 $subtotal = $precio * $cantidad;
 
 // ===============================
@@ -40,7 +40,7 @@ $id_alquiler = $conn->insert_id;
 // ===============================
 // 2. INSERTAR DETALLE
 // ===============================
-$conn->query("
+$conn->query(" 
 INSERT INTO detalle_alquiler 
 (id_alquiler, id_producto, cantidad, precio_alquiler, subtotal)
 VALUES 

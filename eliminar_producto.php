@@ -8,7 +8,7 @@ if(!isset($_GET['id'])){
 
 $id = $_GET['id'];
 
-/* BORRAR INVENTARIO PRIMERO (IMPORTANTE POR FK) */
+/* BORRAR INVENTARIO PRIMERO*/
 mysqli_query($conexion, "DELETE FROM inventario WHERE id_producto=$id");
 
 /* BORRAR PRODUCTO */

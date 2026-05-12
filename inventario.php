@@ -13,7 +13,7 @@ if (!isset($_SESSION['usuario'])) {
 ========================= */
 if (isset($_POST['guardar'])) {
 
-    $id = $_POST['id_producto'] ?? "";
+    $id = $_POST['id_producto'] ?? ""; 
 
     $nombre = mysqli_real_escape_string($conexion, $_POST['nombre']);
     $categoria = mysqli_real_escape_string($conexion, $_POST['categoria']);

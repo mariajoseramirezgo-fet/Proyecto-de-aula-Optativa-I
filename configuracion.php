@@ -107,7 +107,7 @@ if(isset($_GET['eliminar'])){
 }
 
 /* =========================
-   ACTUALIZAR CUENTA
+    ACTUALIZAR CUENTA
 ========================= */
 if(isset($_POST['guardar_cuenta'])){
 

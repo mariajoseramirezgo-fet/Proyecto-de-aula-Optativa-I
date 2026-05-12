@@ -94,7 +94,7 @@ if(isset($_POST['editar'])){
 }
 
 /* =========================
-   LISTAR CLIENTES
+    LISTAR CLIENTES
 ========================= */
 $clientes = mysqli_query(
 $conexion,

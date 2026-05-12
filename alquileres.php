@@ -14,7 +14,7 @@ if (!isset($_SESSION['usuario'])) {
 if(isset($_POST['alquilar'])){
 
     $id_alquiler = $_POST['id_alquiler'] ?? "";
-
+    // LIMPIAR DATOS
     $producto = mysqli_real_escape_string($conexion, $_POST['producto']);
     $cliente = mysqli_real_escape_string($conexion, $_POST['cliente']);
     $total = mysqli_real_escape_string($conexion, $_POST['precio']);

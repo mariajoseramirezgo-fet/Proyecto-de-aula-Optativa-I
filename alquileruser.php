@@ -20,7 +20,7 @@ if ($_SESSION['usuario']['rol'] !== "user") {
 if(isset($_POST['confirmar_alquiler'])){
 
     $id_cliente = $_SESSION['usuario']['id_cliente'];
-    $id_empleado = 1; // puedes cambiarlo si manejas empleados
+    $id_empleado = 1; 
 
     $producto = mysqli_real_escape_string($conexion, $_POST['producto']);
     $fecha_inicio = $_POST['fecha_inicio'];
@@ -119,7 +119,6 @@ if(isset($_POST['confirmar_alquiler'])){
 </ul>
 
 </aside>
-
 
 <main class="main-content">
 

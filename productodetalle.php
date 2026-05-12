@@ -123,7 +123,7 @@ Alquilar
 </div>
 
 <!-- =========================
-     MODAL COMPRA
+    MODAL COMPRA
 ========================= -->
 <div id="modalCompra" class="modal" style="display:none;">
 

@@ -1,0 +1,96 @@
+/* CONTENEDOR GENERAL */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+/* LOGO */
+.logo-login {
+    display: block;
+    margin: 30px auto 10px;
+    width: 120px;
+}
+
+/* TARJETA */
+.card {
+    width: 350px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* TITULOS */
+.card h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card p {
+    color: #777;
+    font-size: 14px;
+}
+
+/* INPUTS */
+.input-login {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* EFECTO FOCUS */
+.input-login:focus {
+    border-color: #2c5364;
+    box-shadow: 0 0 5px rgba(44,83,100,0.4);
+}
+
+/* BOTÓN */
+.btn-enviar {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #2c5364;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* HOVER BOTÓN */
+.btn-enviar:hover {
+    background: #203a43;
+}
+
+/* LINK */
+.extra-links {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.extra-links a {
+    color: #2c5364;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.extra-links a:hover {
+    text-decoration: underline;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+    font-size: 13px;
+}

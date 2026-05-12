@@ -1,0 +1,196 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f6fa;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+    background:#fff;
+    box-shadow:0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* MENU */
+.menu{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+#menu-toggle{
+    border:none;
+    background:transparent;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.logo img{
+    width:180px;
+}
+
+/* BUSCADOR */
+.search{
+    flex:1;
+    max-width:400px;
+    display:flex;
+    align-items:center;
+    background:#eee;
+    padding:8px 12px;
+    border-radius:8px;
+}
+
+.search input{
+    flex:1;
+    border:none;
+    background:transparent;
+    outline:none;
+}
+
+/* ICONOS */
+.icons{
+    display:flex;
+    gap:15px;
+}
+
+.icons button{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    font-size:18px;
+}
+
+/* USER */
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user img{
+    width:45px;
+    border-radius:50%;
+}
+
+/* LAYOUT */
+.container{
+    display:flex;
+    flex:1;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    min-height:100%;
+    background:#fff;
+    transition:0.3s;
+}
+
+.sidebar.active{
+    width:70px;
+}
+
+.sidebar.active span{
+    display:none;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:20px;
+}
+
+.sidebar li{
+    padding:12px;
+}
+
+.sidebar a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:#333;
+}
+
+.sidebar li:hover{
+    background:#f0f0f0;
+    border-radius:6px;
+}
+
+/* CONTENIDO */
+.main-content{
+    flex:1;
+    padding:20px;
+}
+
+/* CAJA */
+.alquiler-box{
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,0.08);
+    max-width:800px;
+    margin-top:20px;
+}
+
+/* FORM */
+.form-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:20px;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+}
+
+.campo label{
+    font-size:14px;
+    margin-bottom:5px;
+    color:#555;
+}
+
+.campo input{
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+.boton{
+    grid-column: span 2;
+    text-align:right;
+}
+
+/* BOTÓN */
+.btn-verde{
+    background:#22c55e;
+    border:none;
+    color:white;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn-verde:hover{
+    background:#16a34a;
+}
+
+/* FOOTER */
+.footer{
+    margin-top:  3px;
+    text-align:center;
+    padding:10px;
+    background:#d9d9d9;
+}

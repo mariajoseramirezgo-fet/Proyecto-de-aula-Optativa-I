@@ -1,0 +1,258 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f8f8f8;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+    background:#fff;
+}
+
+/* MENU */
+#menu-toggle{
+    border:none;
+    background:transparent;
+    font-size:20px;
+    cursor:pointer;
+    outline: none;
+}
+
+.menu{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo img{
+    width:15vw;
+}
+
+/* BUSCADOR */
+.search{
+    width:40vw;
+    height:6vh;
+    display:flex;
+    align-items:center;
+    background:#eee;
+    padding:5px 10px;
+    border-radius:8px;
+}
+
+.search input{
+    width:36vw;
+    height:6vh;
+    border:none;
+    background:transparent;
+    outline:none;
+}
+
+.icons a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+
+}
+
+.icons a i{
+    font-size:70px;
+    color:#000;
+}
+/* USER */
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* CONTENEDOR DE TEXTO */
+.user div{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+}
+
+/* NOMBRE */
+.user b{
+    font-size:0.9rem;
+    color:#000;
+}
+
+/* ROL */
+.user small{
+    font-size:0.75rem;
+    color:#555;
+}
+
+/* FOTO */
+.user img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    object-fit:cover;
+}
+/* LAYOUT */
+.container{
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar ul li a{
+display:flex;
+align-items:center;
+gap:10px;
+color:inherit;
+text-decoration:none;
+width:100%;
+}
+.sidebar{
+    width:220px;
+    min-height:100vh;
+    background:#fff;
+    transition:0.3s;
+}
+
+.sidebar.active{
+    width:70px;
+}
+
+.sidebar.active li span{
+    display:none;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:20px;
+}
+
+.sidebar li{
+    padding:12px;
+    display:flex;
+    gap:10px;
+    cursor:pointer;
+}
+
+.sidebar li:hover{
+    background:#eee;
+}
+
+/* CONTENIDO */
+.main-content{
+    flex:1;
+    padding:20px;
+}
+
+/* TARJETAS SUPERIORES */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-top:20px;
+}
+
+.card-inventario,
+.card-venta,
+.card-alquilados,
+.card-tickets{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+    position:relative;
+}
+
+.card-inventario{border-left:5px solid #3498db;}
+.card-venta{border-left:5px solid #2ecc71;}
+.card-alquilados{border-left:5px solid #f39c12;}
+.card-tickets{border-left:5px solid #e74c3c;}
+
+.cards h3{
+    font-size:18px;
+}
+
+.cards p{
+    font-size:22px;
+    margin-top:5px;
+    font-weight:bold;
+}
+
+/* ICONOS TARJETAS */
+
+.card-inventario i,
+.card-venta i,
+.card-alquilados i,
+.card-tickets i{
+    position:absolute;
+    right:20px;
+    top:20px;
+    font-size:28px;
+}
+
+.card-inventario i{color:#3498db;}
+.card-venta i{color:#2ecc71;}
+.card-alquilados i{color:#f39c12;}
+.card-tickets i{color:#e74c3c;}
+
+/* CARDS GRANDES */
+
+.cards-large{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:20px;
+    margin-top:30px;
+}
+
+.card-large{
+    background:#fff;
+    padding:20px;
+    border-radius:12px;
+}
+
+.card-large small{
+    font-size:0.8rem;
+    align-items: right;
+}
+
+/* STOCK */
+.stock-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:15px;
+    font-size:18px;
+}
+
+.stock-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.stock-left i{
+    font-size:20px;
+}
+/* COLORES */
+
+.rojo{color:red;}
+.amarillo{color:orange;}
+.verde{color:green;}
+
+/* FOOTER */
+
+.footer{
+    margin-top:  3px;
+    text-align:center;
+    padding:10px;
+    background:#d9d9d9;
+}

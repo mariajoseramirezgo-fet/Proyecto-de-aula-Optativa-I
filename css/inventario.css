@@ -1,0 +1,435 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f8f8f8;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+    background:#fff;
+}
+
+/* MENU */
+#menu-toggle{
+    border:none;
+    background:transparent;
+    font-size:20px;
+    cursor:pointer;
+    outline: none;
+}
+
+.menu{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo img{
+    width:15vw;
+}
+
+/* BUSCADOR */
+.search{
+    width:40vw;
+    height:6vh;
+    display:flex;
+    align-items:center;
+    background:#eee;
+    padding:5px 10px;
+    border-radius:8px;
+}
+
+.search input{
+    width:36vw;
+    height:6vh;
+    border:none;
+    background:transparent;
+    outline:none;
+}
+
+.icons a{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+
+}
+
+.icons a i{
+    font-size:70px;
+    color:#000;
+}
+/* USER */
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* CONTENEDOR DE TEXTO */
+.user div{
+    display:flex;
+    flex-direction:column;
+    line-height:1.2;
+}
+
+/* NOMBRE */
+.user b{
+    font-size:0.9rem;
+    color:#000;
+}
+
+/* ROL */
+.user small{
+    font-size:0.75rem;
+    color:#555;
+}
+
+/* FOTO */
+.user img{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    object-fit:cover;
+}
+/* LAYOUT */
+.container{
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar ul li a{
+display:flex;
+align-items:center;
+gap:10px;
+color:inherit;
+text-decoration:none;
+width:100%;
+}
+.sidebar{
+    width:220px;
+    min-height:100vh;
+    background:#fff;
+    transition:0.3s;
+}
+
+.sidebar.active{
+    width:70px;
+}
+
+.sidebar.active li span{
+    display:none;
+}
+
+.sidebar ul{
+    list-style:none;
+    padding:20px;
+}
+
+.sidebar li{
+    padding:12px;
+    display:flex;
+    gap:10px;
+    cursor:pointer;
+}
+
+.sidebar li:hover{
+    background:#eee;
+}
+
+/* CONTENIDO */
+.main-content{
+    flex:1;
+    padding:20px;
+}
+
+.main-content h2{
+    margin-bottom:20px;
+    font-size:30px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.btn-nuevo{
+    background:#20d214;
+    color:#fff;
+    border:none;
+    padding:12px 22px;
+    border-radius:30px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-bottom:20px;
+    transition:0.3s;
+}
+
+.btn-nuevo:hover{
+    background:#18b60f;
+}
+
+/* =========================
+   TABLA
+========================= */
+
+.tabla-productos{
+    width:100%;
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.05);
+
+    /* IMPORTANTE */
+    min-height:200px;
+    height:auto;
+
+    overflow-x:auto;
+}
+
+/* HEADER TABLA */
+
+.tabla-header{
+    display:grid;
+    grid-template-columns:
+    100px
+    2fr
+    1fr
+    1fr
+    1fr
+    1fr
+    120px;
+
+    gap:15px;
+    padding-bottom:15px;
+    border-bottom:1px solid #ddd;
+    font-weight:bold;
+    align-items:center;
+}
+
+/* PRODUCTOS */
+
+.producto{
+    display:grid;
+    grid-template-columns:
+    100px
+    2fr
+    1fr
+    1fr
+    1fr
+    1fr
+    120px;
+
+    gap:15px;
+    align-items:center;
+    padding:20px 0;
+    border-bottom:1px solid #eee;
+}
+
+/* IMAGEN */
+
+.producto img{
+    width:60px;
+    height:60px;
+    object-fit:cover;
+    border-radius:10px;
+    background:#eee;
+}
+
+/* INFO PRODUCTO */
+
+.producto-info{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+.producto-info small{
+    color:gray;
+}
+
+/* STOCK */
+
+.stock{
+    font-weight:bold;
+    color:#000;
+}
+
+/* =========================
+   ACCIONES
+========================= */
+
+.acciones-producto{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.acciones-producto i{
+    cursor:pointer;
+    font-size:18px;
+    transition:0.2s;
+}
+
+.editar{
+    color:#3498db;
+}
+
+.eliminar{
+    color:#e74c3c;
+}
+
+.acciones-producto i:hover{
+    transform:scale(1.2);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(4px);
+    z-index:999;
+}
+
+.modal-content{
+    width:400px;
+    background:#fff;
+    margin:5% auto;
+    padding:25px;
+    border-radius:15px;
+    animation:aparecer 0.3s ease;
+}
+
+@keyframes aparecer{
+    from{
+        transform:translateY(-20px);
+        opacity:0;
+    }
+
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}
+
+.modal-content h3{
+    margin-bottom:20px;
+    text-align:center;
+}
+
+/* FORM */
+
+.modal-content form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.modal-content input{
+    padding:12px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    outline:none;
+    font-size:14px;
+}
+
+.modal-content input:focus{
+    border-color:#20d214;
+}
+
+/* BOTONES MODAL */
+
+.modal-content button{
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.modal-content button[type="submit"]{
+    background:#20d214;
+    color:#fff;
+}
+
+.modal-content button[type="submit"]:hover{
+    background:#18b60f;
+}
+
+.modal-content button[type="button"]{
+    background:#eee;
+}
+
+.modal-content button[type="button"]:hover{
+    background:#ddd;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:20px;
+    text-align:center;
+    padding:12px;
+    background:#dcdcdc;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1000px){
+
+    .search{
+        display:none;
+    }
+
+    .tabla-header,
+    .producto{
+        min-width:850px;
+    }
+
+    .tabla-productos{
+        overflow-x:auto;
+    }
+}
+
+@media(max-width:700px){
+
+    .header{
+        flex-wrap:wrap;
+        gap:15px;
+        height:auto;
+        padding:15px;
+    }
+
+    .user{
+        margin-left:auto;
+    }
+
+    .main-content{
+        padding:15px;
+    }
+
+    .modal-content{
+        width:90%;
+    }
+}

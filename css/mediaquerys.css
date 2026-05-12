@@ -1,0 +1,197 @@
+/* Resolución para moviles */
+@media (max-width: 767px){
+
+    body{
+        min-height: 100vh;
+
+        .logo-login{
+        width: 90%;
+    }
+}
+
+    main{
+        height:  40%;
+
+    .card{
+        width: 500px;
+        padding: 50px 35px;
+    }
+
+    .card h2{
+        font-size: 24px;
+    }
+
+    .card p{
+        font-size: 1rem;
+    }
+
+    .input-login,
+    .btn-enviar{
+        width: 120%;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .extra-links p,
+    .extra-links a{
+        font-size: 13px;
+    }
+}
+
+/* FOOTER */ 
+footer{ 
+    height:  90px;
+    margin-top: auto;
+    font-size: 14px;
+} 
+}
+/* Resolución para TABLET */
+@media (min-width: 768px) and (max-width: 1023px){
+    body{
+    .logo-login{
+        width: 60%;
+        margin: 30px auto 20px auto;
+    }
+}
+    /* MAIN */
+    main{
+        flex: 1;
+        padding: 15px;
+    
+
+    /* CARD */
+    .card{
+        width: 65%;
+        height:  auto;
+        max-width: 600px;
+        padding: 40px 30px;
+    }
+
+    /* TITULOS */
+    .card h2{
+        font-size: 30px;
+    }
+
+    .card p{
+        font-size: 18px;
+    }
+
+    /* FORM */
+    .form-login{
+        width: 100%;
+        gap: 14px;
+    }
+
+    /* INPUTS */
+    .input-login{
+        width: 100%;
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    /* CHECKBOX */
+    .remember{
+        font-size: 15px;
+    }
+
+    /* BOTÓN */
+    .btn-enviar{
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    /* LINKS */
+    .extra-links p,
+    .extra-links a{
+        font-size: 14px;
+        margin:  5px;
+    }
+    }
+}
+    /* FOOTER */
+    footer{
+        height: 10vh;
+        margin-top: 48px;
+        padding: 12px;
+        font-size: 13px;
+    }
+
+
+
+/* RESOLUCIÓN DESKTOP */
+@media (min-width: 1024px) and (max-width: 1439px){
+
+    body{
+    .logo-login{
+        width: 45%;
+        margin: 40px auto 25px auto;
+        margin-top: 5px;
+        }
+    }
+
+    /* MAIN */
+    main{
+        flex: 1;
+        padding: 30px;
+    
+
+    /* CARD */
+    .card{
+        width: 450px;
+        height: 500px;
+        padding: 40px 30px;
+        margin-top: -15px;
+    }
+
+    /* TITULO */
+    .card h2{
+        font-size: 32px;
+    }
+
+    /* TEXTO */
+    .card p{
+        font-size: 20px;
+    }
+
+    /* FORM */
+    .form-login{
+        width: 100%;
+        gap: 16px;
+    }
+
+    /* INPUTS */
+    .input-login{
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    /* CHECKBOX */
+    .remember{
+        font-size: 16px;
+    }
+
+    /* BOTÓN */
+    .btn-enviar{
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    /* LINKS */
+    .extra-links p,
+    .extra-links a{
+        font-size: 14px;
+    }
+
+    /* FOOTER */
+    footer{
+        margin-top: 1px;
+        padding: 15px;
+        font-size: 13px;
+    }
+}
+}
+/* ================= EXTRA LARGE ================= */
+@media (min-width: 1440px){}

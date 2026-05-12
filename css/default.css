@@ -1,0 +1,147 @@
+/* DOCUMENTO PARA LA CONFIGURACION DE TODOS LOS ELEMENTOS PREDETERMINADOS */
+*{ 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+    background: #E9EFF1;
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* LOGO */
+.logo-login{
+    width: 23vw;
+    display: block;
+    margin: 20px auto 10px auto;
+
+}
+
+/* MAIN */
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* CONTENEDOR DE LA TARJETA */
+.card{
+    width: 30vw;
+    height: 450px;
+    max-width: 500px;
+    padding: 40px 25px;
+    background-color: rgba(188, 201, 201);
+    border-radius: 12px;
+    box-shadow: 0 0 13px 0 #cbf2c5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card h2{
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #222;
+    text-align: center;
+}
+
+.card p{
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #555;
+    text-align: center;
+}
+
+/* FORMULARIO */
+.form-login{
+    width: 90%;
+    display: flex;
+    margin-top: 1px;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* INPUTS */
+.input-login{
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    margin: 1px;
+    background: #E0E5E7;
+    outline: none; 
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+/* CHECKBOX */
+.remember{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* BOTÓN */
+.btn-enviar{
+    width: 95%;
+    height: 45px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    background: #2ECC71;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    margin-top: 4px;
+}
+
+.btn-enviar:hover{
+    background-color: #304257;
+    color: #fff;
+    box-shadow: 0 0 7px rgba(255, 255, 255, 0.5);
+}
+
+/* LINKS */
+.extra-links{
+    margin-top: 5px;
+    text-align: center;
+}
+
+.extra-links p{
+    font-size: 0.9rem;
+    color: #000;
+    margin: 0.8px;
+}
+
+.extra-links a{
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: #1d8a4b;
+}
+
+.extra-links a:hover{
+    text-decoration: underline;
+}
+
+/* FOOTER */
+footer{
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 52px;
+    color: #555;
+    border-top: 1px solid #eee;
+    background: #bac8c8;
+    font-size: 13px;
+}

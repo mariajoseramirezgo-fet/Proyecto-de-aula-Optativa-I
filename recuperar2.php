@@ -14,9 +14,9 @@ $resultado = mysqli_query($conexion, $sql);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nueva contraseña</title>
 
-<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/default.css?v=1">
 <link rel="stylesheet" href="css/mediaquerys.css">
-<link rel="stylesheet" href="css/recuperar.css">
 </head>
 
 <body>
@@ -38,8 +38,6 @@ if(mysqli_num_rows($resultado) > 0){
     <input type="hidden" name="correo" value="<?php echo $correo; ?>">
 
     <input class="input-login" type="password" name="nueva" placeholder="Nueva contraseña" required>
-
-    <input class="input-login" type="password" name="confirmar" placeholder="Confirmar contraseña" required>
 
     <button class="btn-enviar" type="submit">Actualizar</button>
 

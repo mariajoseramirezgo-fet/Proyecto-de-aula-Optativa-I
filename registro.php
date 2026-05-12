@@ -6,7 +6,8 @@
 <title>Registro - TICKETS-FET</title>
 
 <link rel="stylesheet" href="css/mediaquerys.css">
-<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/default.css?v=1">
 <link rel="shortcut icon" href="img/icon.png">
 </head>
 
@@ -37,8 +38,6 @@
 <!-- CONTRASEÑA -->
 <input class="input-login" type="password" name="password" placeholder="Contraseña" required>
 
-<!-- CONFIRMAR -->
-<input class="input-login" type="password" name="confirmar" placeholder="Confirmar contraseña" required>
 
 <input class="btn-enviar" type="submit" value="REGISTRARSE">
 

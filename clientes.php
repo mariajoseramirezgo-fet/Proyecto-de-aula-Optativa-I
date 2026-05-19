@@ -3,7 +3,9 @@ session_start();
 include("conexion.php");
 
 // VALIDAR SESIÓN
+
 if (!isset($_SESSION['usuario'])) {
+
     header("Location: index.php");
     exit();
 }
@@ -11,13 +13,33 @@ if (!isset($_SESSION['usuario'])) {
 /* =========================
    GUARDAR CLIENTE
 ========================= */
+
 if(isset($_POST['guardar'])){
 
-    $nombre = mysqli_real_escape_string($conexion, $_POST['nombre']);
-    $apellido = mysqli_real_escape_string($conexion, $_POST['apellido']);
-    $correo = mysqli_real_escape_string($conexion, $_POST['correo']);
-    $telefono = mysqli_real_escape_string($conexion, $_POST['telefono']);
-    $password = mysqli_real_escape_string($conexion, $_POST['password']);
+    $nombre = mysqli_real_escape_string(
+        $conexion,
+        $_POST['nombre']
+    );
+
+    $apellido = mysqli_real_escape_string(
+        $conexion,
+        $_POST['apellido']
+    );
+
+    $correo = mysqli_real_escape_string(
+        $conexion,
+        $_POST['correo']
+    );
+
+    $telefono = mysqli_real_escape_string(
+        $conexion,
+        $_POST['telefono']
+    );
+
+    $password = mysqli_real_escape_string(
+        $conexion,
+        $_POST['password']
+    );
 
     $rol = "cliente";
 
@@ -42,7 +64,7 @@ if(isset($_POST['guardar'])){
         '$rol'
     )";
 
-    mysqli_query($conexion,$sql);
+    mysqli_query($conexion, $sql);
 
     header("Location: clientes.php");
     exit();
@@ -51,6 +73,7 @@ if(isset($_POST['guardar'])){
 /* =========================
    ELIMINAR
 ========================= */
+
 if(isset($_GET['eliminar'])){
 
     $id = $_GET['eliminar'];
@@ -67,15 +90,35 @@ if(isset($_GET['eliminar'])){
 /* =========================
    EDITAR
 ========================= */
+
 if(isset($_POST['editar'])){
 
     $id = $_POST['id'];
 
-    $nombre = mysqli_real_escape_string($conexion, $_POST['nombre']);
-    $apellido = mysqli_real_escape_string($conexion, $_POST['apellido']);
-    $correo = mysqli_real_escape_string($conexion, $_POST['correo']);
-    $telefono = mysqli_real_escape_string($conexion, $_POST['telefono']);
-    $password = mysqli_real_escape_string($conexion, $_POST['password']);
+    $nombre = mysqli_real_escape_string(
+        $conexion,
+        $_POST['nombre']
+    );
+
+    $apellido = mysqli_real_escape_string(
+        $conexion,
+        $_POST['apellido']
+    );
+
+    $correo = mysqli_real_escape_string(
+        $conexion,
+        $_POST['correo']
+    );
+
+    $telefono = mysqli_real_escape_string(
+        $conexion,
+        $_POST['telefono']
+    );
+
+    $password = mysqli_real_escape_string(
+        $conexion,
+        $_POST['password']
+    );
 
     $sql = "UPDATE cliente SET
 
@@ -87,7 +130,7 @@ if(isset($_POST['editar'])){
 
     WHERE id_cliente='$id'";
 
-    mysqli_query($conexion,$sql);
+    mysqli_query($conexion, $sql);
 
     header("Location: clientes.php");
     exit();
@@ -96,9 +139,10 @@ if(isset($_POST['editar'])){
 /* =========================
     LISTAR CLIENTES
 ========================= */
+
 $clientes = mysqli_query(
-$conexion,
-"SELECT * FROM cliente ORDER BY id_cliente DESC"
+    $conexion,
+    "SELECT * FROM cliente ORDER BY id_cliente DESC"
 );
 
 ?>
@@ -107,316 +151,377 @@ $conexion,
 <html lang="es">
 
 <head>
-
 <meta charset="UTF-8">
-
-<title>Clientes - SportHub</title>
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="css/clientes.css?v=1">
-
-<script src="https://kit.fontawesome.com/9d1a86738f.js"></script>
-
+<title>Clientes - TICKETS-FET</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/clientes.css?v=2">
+<link rel="stylesheet" href="css/mediaquerystickets.css">
+<script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <header class="header">
 
-<div class="menu">
+    <div class="menu">
 
-<button id="menu-toggle">
-<i class="fa-solid fa-bars"></i>
-</button>
+        <button id="menu-toggle">
 
-<div class="logo">
-<img src="img/logo_dashboard.png">
-</div>
+            <i class="fa-solid fa-bars"></i>
 
-</div>
+        </button>
 
-<div class="search">
+        <div class="logo">
 
-<input type="text" placeholder="Buscar...">
+            <img src="img/logo_dashboard.png">
 
-<i class="fa-solid fa-magnifying-glass"></i>
+        </div>
 
-</div>
+    </div>
 
-<div class="icons">
+    <div class="search">
 
-<button onclick="logout()">
-<i class="fa-solid fa-arrow-right-from-bracket"></i>
-</button>
+        <input
+        type="text"
+        placeholder="Buscar..."
+        >
 
-</div>
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-<div class="user">
+    </div>
 
-<div>
-<p><b><?php echo $_SESSION['usuario']['nombre']; ?></b></p>
-<small>Administrador</small>
-</div>
+    <div class="icons">
 
-<img src="img/avatar.png">
+        <a href="logout.php">
 
-</div>
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+        </a>
+
+    </div>
+
+    <div class="user">
+
+        <div>
+
+            <p>
+
+                <b>
+                    <?php echo $_SESSION['usuario']['nombre']; ?>
+                </b>
+
+            </p>
+
+            <small>Administrador</small>
+
+        </div>
+
+        <img src="img/avatar.png">
+
+    </div>
 
 </header>
 
 <div class="container">
 
-<!-- SIDEBAR -->
-
-<aside class="sidebar" id="sidebar">
-
-<ul>
-
-<li>
-<a href="dashboard.php">
-<i class="fa-solid fa-house"></i>
-<span>Dashboard</span>
-</a>
-</li>
-
-<li>
-<a href="inventario.php">
-<i class="fa-solid fa-box"></i>
-<span>Inventario</span>
-</a>
-</li>
-
-<li>
-<a href="alquileres.php">
-<i class="fa-solid fa-calendar"></i>
-<span>Alquileres</span>
-</a>
-</li>
-
-<li>
-<a href="reportes.php">
-<i class="fa-solid fa-chart-line"></i>
-<span>Reportes</span>
-</a>
-</li>
-
-<li>
-<a href="tickets.php">
-<i class="fa-solid fa-ticket"></i>
-<span>Tickets</span>
-</a>
-</li>
-
-<li>
-<a href="clientes.php">
-<i class="fa-solid fa-users"></i>
-<span>Clientes</span>
-</a>
-</li>
-
-<li>
-<a href="configuracion.php">
-<i class="fa-solid fa-gear"></i>
-<span>Configuración</span>
-</a>
-</li>
+    <aside id="sidebar" class="sidebar">
 
-</ul>
+        <ul>
 
-</aside>
+            <li>
 
-<!-- MAIN -->
+                <a href="dashboard.php">
 
-<main class="main-content">
+                    <i class="fa-solid fa-house"></i>
 
-<h2>Directorio de Clientes</h2>
+                    <span>Dashboard</span>
 
-<p>
-Administra la información de tus clientes.
-</p>
+                </a>
 
-<div class="alquileres-container">
+            </li>
 
-<!-- FORM -->
+            <li>
 
-<div class="card-form">
+                <a href="inventario.php">
 
-<h3 id="tituloForm">
-NUEVO CLIENTE
-</h3>
+                    <i class="fa-solid fa-box"></i>
 
-<form method="POST">
+                    <span>Inventario</span>
 
-<input
-type="hidden"
-name="id"
-id="id"
->
+                </a>
 
-<label>Nombre</label>
+            </li>
 
-<input
-type="text"
-name="nombre"
-id="nombre"
-required
->
+            <li>
 
-<label>Apellido</label>
+                <a href="alquileres.php">
 
-<input
-type="text"
-name="apellido"
-id="apellido"
-required
->
+                    <i class="fa-solid fa-calendar"></i>
 
-<label>Correo</label>
+                    <span>Alquileres</span>
 
-<input
-type="email"
-name="correo"
-id="correo"
-required
->
+                </a>
 
-<label>Teléfono</label>
+            </li>
 
-<input
-type="text"
-name="telefono"
-id="telefono"
-required
->
+            <li>
 
-<label>Password</label>
+                <a href="reportes.php">
 
-<input
-type="text"
-name="password"
-id="password"
-required
->
+                    <i class="fa-solid fa-chart-line"></i>
 
-<div class="botones-form">
+                    <span>Reportes</span>
 
-<button
-type="submit"
-name="guardar"
-id="btnGuardar"
-class="btn-alquilar">
+                </a>
 
-Guardar
+            </li>
 
-</button>
+            <li>
 
-<button
-type="submit" name="editar" id="btnEditar" class="btn-editar" style="display:none;">Actualizar</button>
-</div>
+                <a href="tickets.php">
 
-</form>
+                    <i class="fa-solid fa-ticket"></i>
 
-</div>
+                    <span>Tickets</span>
 
-<!-- TABLA -->
+                </a>
 
-<div class="card-tabla">
+            </li>
 
-<h3>LISTA DE CLIENTES</h3>
+            <li>
 
-<div class="tabla-header">
+                <a href="clientes.php">
 
-<span>ID</span>
-<span>NOMBRE</span>
-<span>APELLIDO</span>
-<span>CORREO</span>
-<span>TELÉFONO</span>
-<span>ROL</span>
-<span>ACCIONES</span>
+                    <i class="fa-solid fa-users"></i>
 
-</div>
+                    <span>Clientes</span>
 
-<?php while($c = mysqli_fetch_assoc($clientes)){ ?>
+                </a>
 
-<div class="fila">
+            </li>
 
-<span>
-<?php echo $c['id_cliente']; ?>
-</span>
+            <li>
 
-<span>
-<?php echo $c['nombre']; ?>
-</span>
+                <a href="configuracion.php">
 
-<span>
-<?php echo $c['apellido']; ?>
-</span>
+                    <i class="fa-solid fa-gear"></i>
 
-<span>
-<?php echo $c['correo']; ?>
-</span>
+                    <span>Configuración</span>
 
-<span>
-<?php echo $c['telefono']; ?>
-</span>
+                </a>
 
-<span>
-<?php echo $c['rol']; ?>
-</span>
+            </li>
 
-<div class="acciones">
+        </ul>
 
-<!-- ELIMINAR -->
+    </aside>
 
-<i
-class="fa-solid fa-trash"
+    <!-- MAIN -->
 
-onclick="eliminarCliente(
-<?php echo $c['id_cliente']; ?>
-)">
-</i>
+    <main class="main-content">
 
-<!-- EDITAR -->
+        <h2>Directorio de Clientes</h2>
 
-<i
-class="fa-solid fa-pen-to-square"
+        <p>
+            Administra la información de tus clientes.
+        </p>
 
-onclick="editarCliente(
+        <div class="alquileres-container">
 
-'<?php echo $c['id_cliente']; ?>',
+            <!-- FORM -->
 
-'<?php echo $c['nombre']; ?>',
+            <div class="card-form">
 
-'<?php echo $c['apellido']; ?>',
+                <h3 id="tituloForm">
 
-'<?php echo $c['correo']; ?>',
+                    NUEVO CLIENTE
 
-'<?php echo $c['telefono']; ?>',
+                </h3>
 
-'<?php echo $c['password']; ?>'
+                <form method="POST">
 
-)">
-</i>
+                    <input
+                    type="hidden"
+                    name="id"
+                    id="id"
+                    >
 
-</div>
+                    <label>Nombre</label>
 
-</div>
+                    <input
+                    type="text"
+                    name="nombre"
+                    id="nombre"
+                    required
+                    >
 
-<?php } ?>
+                    <label>Apellido</label>
 
-</div>
+                    <input
+                    type="text"
+                    name="apellido"
+                    id="apellido"
+                    required
+                    >
 
-</div>
+                    <label>Correo</label>
 
-</main>
+                    <input
+                    type="email"
+                    name="correo"
+                    id="correo"
+                    required
+                    >
+
+                    <label>Teléfono</label>
+
+                    <input
+                    type="text"
+                    name="telefono"
+                    id="telefono"
+                    required
+                    >
+
+                    <div class="botones-form">
+
+                        <button
+                        type="submit"
+                        name="guardar"
+                        id="btnGuardar"
+                        class="btn-alquilar"
+                        >
+
+                            Guardar
+
+                        </button>
+
+                        <button
+                        type="submit"
+                        name="editar"
+                        id="btnEditar"
+                        class="btn-editar"
+                        style="display:none;"
+                        >
+
+                            Actualizar
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- TABLA -->
+
+            <div class="card-tabla">
+
+                <h3>LISTA DE CLIENTES</h3>
+
+                <div class="tabla-header">
+
+                    <span>ID</span>
+                    <span>NOMBRE</span>
+                    <span>APELLIDO</span>
+                    <span>CORREO</span>
+                    <span>TELÉFONO</span>
+                    <span>ROL</span>
+                    <span>ACCIONES</span>
+
+                </div>
+
+                <?php while($c = mysqli_fetch_assoc($clientes)){ ?>
+
+                <div class="fila">
+
+                    <span>
+
+                        <?php echo $c['id_cliente']; ?>
+
+                    </span>
+
+                    <span>
+
+                        <?php echo $c['nombre']; ?>
+
+                    </span>
+
+                    <span>
+
+                        <?php echo $c['apellido']; ?>
+
+                    </span>
+
+                    <span>
+
+                        <?php echo $c['correo']; ?>
+
+                    </span>
+
+                    <span>
+
+                        <?php echo $c['telefono']; ?>
+
+                    </span>
+
+                    <span>
+
+                        <?php echo $c['rol']; ?>
+
+                    </span>
+
+                    <div class="acciones">
+
+                        <!-- ELIMINAR -->
+
+                        <i
+                        class="fa-solid fa-trash"
+
+                        onclick="eliminarCliente(
+                        <?php echo $c['id_cliente']; ?>
+                        )">
+                        </i>
+
+                        <!-- EDITAR -->
+
+                        <i
+                        class="fa-solid fa-pen-to-square"
+
+                        onclick="editarCliente(
+
+                        '<?php echo $c['id_cliente']; ?>',
+
+                        '<?php echo $c['nombre']; ?>',
+
+                        '<?php echo $c['apellido']; ?>',
+
+                        '<?php echo $c['correo']; ?>',
+
+                        '<?php echo $c['telefono']; ?>',
+
+                        )">
+                        </i>
+
+                    </div>
+
+                </div>
+
+                <?php } ?>
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
 
 <footer class="footer">
 
-<small>Mariajose © 2026</small>
+    <small>Mariajose © 2026</small>
 
 </footer>
 
@@ -426,7 +531,7 @@ onclick="editarCliente(
 
 function logout(){
 
-    window.location.href="logout.php";
+    window.location.href = "logout.php";
 
 }
 
@@ -458,20 +563,22 @@ function eliminarCliente(id){
 // EDITAR
 
 function editarCliente(
-id,
-nombre,
-apellido,
-correo,
-telefono,
-password
+    id,
+    nombre,
+    apellido,
+    correo,
+    telefono,
+    password
 ){
 
     // TITULO
+
     document.getElementById(
     "tituloForm"
     ).innerHTML = "EDITAR CLIENTE";
 
     // INPUTS
+
     document.getElementById(
     "id"
     ).value = id;
@@ -492,11 +599,8 @@ password
     "telefono"
     ).value = telefono;
 
-    document.getElementById(
-    "password"
-    ).value = password;
-
     // BOTONES
+
     document.getElementById(
     "btnGuardar"
     ).style.display = "none";

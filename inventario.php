@@ -9,11 +9,12 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 /* =========================
-   GUARDAR / EDITAR PRODUCTO
+    GUARDAR / EDITAR PRODUCTO
 ========================= */
+
 if (isset($_POST['guardar'])) {
 
-    $id = $_POST['id_producto'] ?? ""; 
+    $id = $_POST['id_producto'] ?? "";
 
     $nombre = mysqli_real_escape_string($conexion, $_POST['nombre']);
     $categoria = mysqli_real_escape_string($conexion, $_POST['categoria']);
@@ -25,7 +26,11 @@ if (isset($_POST['guardar'])) {
     $nombreImagen = "";
 
     /* IMAGEN */
-    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+
+    if (
+        isset($_FILES['imagen']) &&
+        $_FILES['imagen']['error'] == 0
+    ) {
 
         $carpeta = "img/productos/";
 
@@ -33,20 +38,28 @@ if (isset($_POST['guardar'])) {
             mkdir($carpeta, 0777, true);
         }
 
-        $nombreImagen = time() . "_" . basename($_FILES['imagen']['name']);
+        $nombreImagen =
+        time() . "_" .
+        basename($_FILES['imagen']['name']);
+
         $ruta = $carpeta . $nombreImagen;
 
-        move_uploaded_file($_FILES['imagen']['tmp_name'], $ruta);
+        move_uploaded_file(
+            $_FILES['imagen']['tmp_name'],
+            $ruta
+        );
 
         $imagenSQL = ", imagen='$nombreImagen'";
     }
 
     /* =========================
-       EDITAR PRODUCTO
+        EDITAR PRODUCTO
     ========================= */
+
     if ($id != "") {
 
         $sqlEditar = "UPDATE producto SET
+
             nombre='$nombre',
             id_categoria='$categoria',
             precio_venta='$precio',
@@ -54,13 +67,17 @@ if (isset($_POST['guardar'])) {
             stock_total='$stock',
             stock_disponible='$stock'
             $imagenSQL
+
         WHERE id_producto='$id'";
 
         mysqli_query($conexion, $sqlEditar);
 
         /* ACTUALIZAR INVENTARIO */
+
         $sqlInventario = "UPDATE inventario SET
+
             stock_actual='$stock'
+
         WHERE id_producto='$id'";
 
         mysqli_query($conexion, $sqlInventario);
@@ -69,6 +86,7 @@ if (isset($_POST['guardar'])) {
     /* =========================
        CREAR PRODUCTO
     ========================= */
+
     else {
 
         $sqlCrear = "INSERT INTO producto
@@ -81,7 +99,9 @@ if (isset($_POST['guardar'])) {
             stock_disponible,
             imagen
         )
+
         VALUES
+
         (
             '$nombre',
             '$categoria',
@@ -97,6 +117,7 @@ if (isset($_POST['guardar'])) {
         $id_producto = mysqli_insert_id($conexion);
 
         /* INVENTARIO */
+
         $sqlInventario = "INSERT INTO inventario
         (
             id_producto,
@@ -104,7 +125,9 @@ if (isset($_POST['guardar'])) {
             stock_minimo,
             ubicacion
         )
+
         VALUES
+
         (
             '$id_producto',
             '$stock',
@@ -124,316 +147,356 @@ if (isset($_POST['guardar'])) {
 ========================= */
 
 $sql = "SELECT p.*, i.stock_actual
+
 FROM producto p
+
 INNER JOIN inventario i
 ON p.id_producto = i.id_producto
+
 ORDER BY p.id_producto DESC";
 
 $resultado = mysqli_query($conexion, $sql);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-<meta charset="UTF-8">
-<title>Inventario - SportHub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Inventario - SportHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/inventario.css?v=2">
+    <link rel="stylesheet" href="css/mediaqueryspagina.css?v=1">
+    <script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/inventario.css?v=1">
-
-<script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
 <header class="header">
 
-<div class="menu">
+    <div class="menu">
 
-<button id="menu-toggle">
-<i class="fa-solid fa-bars"></i>
-</button>
+        <button id="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-<div class="logo">
-<img src="img/logo_dashboard.png">
-</div>
+        <div class="logo">
+            <img src="img/logo_dashboard.png">
+        </div>
 
-</div>
+    </div>
 
-<div class="search">
-<input type="text" placeholder="Buscar...">
-<i class="fa-solid fa-magnifying-glass"></i>
-</div>
+    <div class="search">
 
-<div class="icons">
-<button onclick="logout()">
-<i class="fa-solid fa-arrow-right-from-bracket"></i>
-</button>
-</div>
+        <input
+        type="text"
+        placeholder="Buscar..."
+        >
 
-<div class="user">
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-<div>
-<p><b><?php echo $_SESSION['usuario']['nombre']; ?></b></p>
-<small>Administrador</small>
-</div>
+    </div>
 
-<img src="img/avatar.png">
+    <a href="logout.php">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </a>
 
-</div>
+    <div class="user">
+
+        <div>
+
+            <p>
+                <b>
+                    <?php echo $_SESSION['usuario']['nombre']; ?>
+                </b>
+            </p>
+
+            <small>Administrador</small>
+
+        </div>
+
+        <img src="img/avatar.png">
+
+    </div>
 
 </header>
 
 <div class="container">
 
-<!-- SIDEBAR -->
-<aside id="sidebar" class="sidebar">
+    <!-- SIDEBAR -->
 
-<ul>
+    <aside id="sidebar" class="sidebar">
 
-<li>
-<a href="dashboard.php">
-<i class="fa-solid fa-house"></i>
-<span>Dashboard</span>
-</a>
-</li>
+        <ul>
 
-<li>
-<a href="inventario.php">
-<i class="fa-solid fa-box"></i>
-<span>Inventario</span>
-</a>
-</li>
+            <li>
+                <a href="dashboard.php">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
 
-<li>
-<a href="alquileres.php">
-<i class="fa-solid fa-calendar"></i>
-<span>Alquileres</span>
-</a>
-</li>
+            <li>
+                <a href="inventario.php">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Inventario</span>
+                </a>
+            </li>
 
-<li>
-<a href="reportes.php">
-<i class="fa-solid fa-chart-line"></i>
-<span>Reportes</span>
-</a>
-</li>
+            <li>
+                <a href="alquileres.php">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Alquileres</span>
+                </a>
+            </li>
 
-<li>
-<a href="tickets.php">
-<i class="fa-solid fa-ticket"></i>
-<span>Tickets</span>
-</a>
-</li>
+            <li>
+                <a href="reportes.php">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
 
-<li>
-<a href="clientes.php">
-<i class="fa-solid fa-users"></i>
-<span>Clientes</span>
-</a>
-</li>
+            <li>
+                <a href="tickets.php">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Tickets</span>
+                </a>
+            </li>
 
-<li>
-<a href="configuracion.php">
-<i class="fa-solid fa-gear"></i>
-<span>Configuración</span>
-</a>
-</li>
+            <li>
+                <a href="clientes.php">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+            </li>
 
-</ul>
+            <li>
+                <a href="configuracion.php">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Configuración</span>
+                </a>
+            </li>
 
-</aside>
+        </ul>
 
-<!-- MAIN -->
-<main class="main-content">
+    </aside>
 
-<h2>GESTIÓN DE INVENTARIO</h2>
+    <!-- MAIN -->
 
-<button class="btn-nuevo" onclick="abrirModal()">
-+ NUEVO PRODUCTO
-</button>
+    <main class="main-content">
 
-<div class="tabla-productos">
+        <h2>GESTIÓN DE INVENTARIO</h2>
 
-<div class="tabla-header">
+        <button
+        class="btn-nuevo"
+        onclick="abrirModal()"
+        >
+            + NUEVO PRODUCTO
+        </button>
 
-<span>Imagen</span>
-<span>Producto</span>
-<span>Categoría</span>
-<span>Precio Venta</span>
-<span>Precio Alquiler</span>
-<span>Stock</span>
-<span>Acciones</span>
+        <div class="tabla-productos">
 
-</div>
+            <div class="tabla-header">
 
-<?php while($row = mysqli_fetch_assoc($resultado)) { ?>
+                <span>Imagen</span>
+                <span>Producto</span>
+                <span>Categoría</span>
+                <span>Precio Venta</span>
+                <span>Precio Alquiler</span>
+                <span>Stock</span>
+                <span>Acciones</span>
 
-<div class="producto">
+            </div>
 
-<div>
-<img
-src="img/productos/<?php echo $row['imagen']; ?>"
-width="60"
-height="60"
-style="object-fit:cover;border-radius:10px;"
->
-</div>
+            <?php while($row = mysqli_fetch_assoc($resultado)) { ?>
 
-<div class="producto-info">
+            <div class="producto">
 
-<div>
-<b><?php echo $row['nombre']; ?></b><br>
+                <div>
 
-<small>
-SKU: <?php echo $row['id_producto']; ?>
-</small>
-</div>
+                    <img
+                    src="img/productos/<?php echo $row['imagen']; ?>"
+                    width="60"
+                    height="60"
+                    style="object-fit:cover;border-radius:10px;"
+                    >
 
-</div>
+                </div>
 
-<span>
-<?php echo $row['id_categoria']; ?>
-</span>
+                <div class="producto-info">
 
-<span>
-$<?php echo number_format($row['precio_venta']); ?>
-</span>
+                    <div>
 
-<span>
-$<?php echo number_format($row['precio_alquiler']); ?>
-</span>
+                        <b>
+                            <?php echo $row['nombre']; ?>
+                        </b>
 
-<span class="stock">
-<?php echo $row['stock_actual']; ?>
-</span>
+                        <br>
 
-<div class="acciones-producto">
+                        <small>
+                            SKU:
+                            <?php echo $row['id_producto']; ?>
+                        </small>
 
-<i
-class="fa-solid fa-pen-to-square editar"
+                    </div>
 
-onclick="editarProducto(
-'<?php echo $row['id_producto']; ?>',
-'<?php echo htmlspecialchars($row['nombre'], ENT_QUOTES); ?>',
-'<?php echo $row['id_categoria']; ?>',
-'<?php echo $row['precio_venta']; ?>',
-'<?php echo $row['precio_alquiler']; ?>',
-'<?php echo $row['stock_actual']; ?>'
-)">
-</i>
+                </div>
 
-<i
-class="fa-solid fa-trash eliminar"
+                <span>
+                    <?php echo $row['id_categoria']; ?>
+                </span>
 
-onclick="eliminarProducto(
-<?php echo $row['id_producto']; ?>
-)">
-</i>
+                <span>
+                    $<?php echo number_format($row['precio_venta']); ?>
+                </span>
 
-</div>
+                <span>
+                    $<?php echo number_format($row['precio_alquiler']); ?>
+                </span>
 
-</div>
+                <span class="stock">
+                    <?php echo $row['stock_actual']; ?>
+                </span>
 
-<?php } ?>
+                <div class="acciones-producto">
 
-</div>
+                    <i
+                    class="fa-solid fa-pen-to-square editar"
 
-</main>
+                    onclick="editarProducto(
+                    '<?php echo $row['id_producto']; ?>',
+                    '<?php echo htmlspecialchars($row['nombre'], ENT_QUOTES); ?>',
+                    '<?php echo $row['id_categoria']; ?>',
+                    '<?php echo $row['precio_venta']; ?>',
+                    '<?php echo $row['precio_alquiler']; ?>',
+                    '<?php echo $row['stock_actual']; ?>'
+                    )">
+                    </i>
+
+                    <i
+                    class="fa-solid fa-trash eliminar"
+
+                    onclick="eliminarProducto(
+                    <?php echo $row['id_producto']; ?>
+                    )">
+                    </i>
+
+                </div>
+
+            </div>
+
+            <?php } ?>
+
+        </div>
+
+    </main>
 
 </div>
 
 <!-- MODAL -->
+
 <div id="modal" class="modal">
 
-<div class="modal-content">
+    <div class="modal-content">
 
-<h3>Nuevo Producto</h3>
+        <h3>Nuevo Producto</h3>
 
-<form method="POST" enctype="multipart/form-data">
+        <form
+        method="POST"
+        enctype="multipart/form-data"
+        >
 
-<!-- ID OCULTO -->
-<input
-type="hidden"
-name="id_producto"
-id="id_producto"
->
+            <!-- ID OCULTO -->
 
-<input
-name="nombre"
-type="text"
-placeholder="Nombre"
-required
->
+            <input
+            type="hidden"
+            name="id_producto"
+            id="id_producto"
+            >
 
-<select
-name="categoria"
-required
->
+            <input
+            name="nombre"
+            type="text"
+            placeholder="Nombre"
+            required
+            >
 
-<option value="">
-Selecciona una categoría
-</option>
+            <select name="categoria" required>
 
-<?php
+                <option value="">
+                    Selecciona una categoría
+                </option>
 
-$sqlCategorias = "SELECT * FROM categoria";
-$resCategorias = mysqli_query($conexion, $sqlCategorias);
+                <?php
 
-while($cat = mysqli_fetch_assoc($resCategorias)){
+                $sqlCategorias = "SELECT * FROM categoria";
 
-?>
+                $resCategorias = mysqli_query(
+                    $conexion,
+                    $sqlCategorias
+                );
 
-<option value="<?php echo $cat['id_categoria']; ?>">
+                while($cat = mysqli_fetch_assoc($resCategorias)){
 
-<?php echo $cat['nombre']; ?>
+                ?>
 
-</option>
+                <option
+                value="<?php echo $cat['id_categoria']; ?>"
+                >
 
-<?php } ?>
+                    <?php echo $cat['nombre']; ?>
 
-</select>
+                </option>
 
-<input
-name="precio"
-type="number"
-placeholder="Precio venta"
-required
->
+                <?php } ?>
 
-<input
-name="precio_alquiler"
-type="number"
-placeholder="Precio alquiler"
-required
->
+            </select>
 
-<input
-name="stock"
-type="number"
-placeholder="Stock"
-required
->
+            <input
+            name="precio"
+            type="number"
+            placeholder="Precio venta"
+            required
+            >
 
-<input
-type="file"
-name="imagen"
-accept="image/*"
->
+            <input
+            name="precio_alquiler"
+            type="number"
+            placeholder="Precio alquiler"
+            required
+            >
 
-<button type="submit" name="guardar">
-Guardar
-</button>
+            <input
+            name="stock"
+            type="number"
+            placeholder="Stock"
+            required
+            >
 
-<button type="button" onclick="cerrarModal()">
-Cancelar
-</button>
+            <input
+            type="file"
+            name="imagen"
+            accept="image/*"
+            >
 
-</form>
+            <button type="submit" name="guardar">
+                Guardar
+            </button>
 
-</div>
+            <button
+            type="button"
+            onclick="cerrarModal()"
+            >
+                Cancelar
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
 
@@ -455,6 +518,7 @@ btn.addEventListener("click", ()=>{
 function logout(){
 
     localStorage.clear();
+
     window.location.href = "index.php";
 
 }
@@ -463,10 +527,15 @@ function logout(){
 
 function abrirModal(){
 
-    document.getElementById("modal").style.display = "block";
+    document.getElementById(
+    "modal"
+    ).style.display = "block";
 
     /* LIMPIAR */
-    document.getElementById("id_producto").value = "";
+
+    document.getElementById(
+    "id_producto"
+    ).value = "";
 
     document.querySelector(
     'input[name="nombre"]'
@@ -491,7 +560,9 @@ function abrirModal(){
 
 function cerrarModal(){
 
-    document.getElementById("modal").style.display = "none";
+    document.getElementById(
+    "modal"
+    ).style.display = "none";
 
 }
 
@@ -499,7 +570,9 @@ function cerrarModal(){
 
 function eliminarProducto(id){
 
-    if(confirm("¿Deseas eliminar este producto?")){
+    if(confirm(
+    "¿Deseas eliminar este producto?"
+    )){
 
         window.location.href =
         "eliminar_producto.php?id=" + id;

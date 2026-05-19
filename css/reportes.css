@@ -75,25 +75,32 @@ body{
     color:#000;
 }
 
-/* USER */
-.user{
-    font-size:0.8rem;
+/* CONTENEDOR DE TEXTO */
+.user div{
     display:flex;
-    align-items:center;
-    gap:10px;
+    flex-direction:column;
+    line-height:1.2;
 }
 
-.user p{
-    font-size:0.7rem;
-    color:#0c0c0c;
-    transform:translateX(47px);
+/* NOMBRE */
+.user b{
+    font-size:0.9rem;
+    color:#000;
 }
 
+/* ROL */
+.user small{
+    font-size:0.75rem;
+    color:#555;
+}
+
+/* FOTO */
 .user img{
-    width:55px;
+    width:50px;
+    height:50px;
     border-radius:50%;
+    object-fit:cover;
 }
-
 /* LAYOUT */
 .container{
     display:flex;

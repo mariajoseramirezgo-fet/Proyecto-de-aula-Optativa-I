@@ -6,16 +6,16 @@ include("conexion.php");
    VALIDAR SESIÓN
 ========================= */
 if (!isset($_SESSION['usuario'])) {
-   header("Location: index.php");
-   exit();
+    header("Location: index.php");
+    exit();
 }
 
 /* =========================
    VALIDAR ROL
 ========================= */
 if ($_SESSION['usuario']['rol'] != "user") {
-   header("Location: dashboard.php");
-   exit();
+    header("Location: dashboard.php");
+    exit();
 }
 
 /* =========================
@@ -33,10 +33,17 @@ FROM alquiler
 WHERE id_cliente = '$id_usuario'
 AND estado = 'Activo'";
 
-$resAlquilados = mysqli_query($conexion, $sqlAlquilados);
-$rowAlquilados = mysqli_fetch_assoc($resAlquilados);
+$resAlquilados = mysqli_query(
+    $conexion,
+    $sqlAlquilados
+);
 
-$totalAlquilados = $rowAlquilados['total'] ?? 0;
+$rowAlquilados = mysqli_fetch_assoc(
+    $resAlquilados
+);
+
+$totalAlquilados =
+$rowAlquilados['total'] ?? 0;
 
 /* =========================
    HISTORIAL
@@ -45,10 +52,17 @@ $sqlHistorial = "SELECT COUNT(*) AS total
 FROM alquiler
 WHERE id_cliente = '$id_usuario'";
 
-$resHistorial = mysqli_query($conexion, $sqlHistorial);
-$rowHistorial = mysqli_fetch_assoc($resHistorial);
+$resHistorial = mysqli_query(
+    $conexion,
+    $sqlHistorial
+);
 
-$totalHistorial = $rowHistorial['total'] ?? 0;
+$rowHistorial = mysqli_fetch_assoc(
+    $resHistorial
+);
+
+$totalHistorial =
+$rowHistorial['total'] ?? 0;
 
 /* =========================
    PENDIENTES
@@ -58,55 +72,75 @@ FROM alquiler
 WHERE id_cliente = '$id_usuario'
 AND estado = 'Pendiente'";
 
-$resPendientes = mysqli_query($conexion, $sqlPendientes);
-$rowPendientes = mysqli_fetch_assoc($resPendientes);
+$resPendientes = mysqli_query(
+    $conexion,
+    $sqlPendientes
+);
 
-$totalPendientes = $rowPendientes['total'] ?? 0;
+$rowPendientes = mysqli_fetch_assoc(
+    $resPendientes
+);
+
+$totalPendientes =
+$rowPendientes['total'] ?? 0;
 
 /* =========================
    PRÓXIMOS ALQUILERES
 ========================= */
-$sqlProximos = "SELECT 
+$sqlProximos = "SELECT
 producto.nombre,
 alquiler.fecha_fin
 
 FROM alquiler
 
-INNER JOIN detalle_alquiler 
-ON alquiler.id_alquiler = detalle_alquiler.id_alquiler
+INNER JOIN detalle_alquiler
+ON alquiler.id_alquiler =
+detalle_alquiler.id_alquiler
 
-INNER JOIN producto 
-ON detalle_alquiler.id_producto = producto.id_producto
+INNER JOIN producto
+ON detalle_alquiler.id_producto =
+producto.id_producto
 
-WHERE alquiler.id_cliente = '$id_usuario'
+WHERE alquiler.id_cliente =
+'$id_usuario'
+
 AND alquiler.estado = 'Activo'
 
 ORDER BY alquiler.fecha_fin ASC
 LIMIT 5";
 
-$resProximos = mysqli_query($conexion, $sqlProximos);
+$resProximos = mysqli_query(
+    $conexion,
+    $sqlProximos
+);
 
 /* =========================
    ACTIVIDAD RECIENTE
 ========================= */
-$sqlActividad = "SELECT 
+$sqlActividad = "SELECT
 producto.nombre,
 alquiler.estado
 
 FROM alquiler
 
-INNER JOIN detalle_alquiler 
-ON alquiler.id_alquiler = detalle_alquiler.id_alquiler
+INNER JOIN detalle_alquiler
+ON alquiler.id_alquiler =
+detalle_alquiler.id_alquiler
 
-INNER JOIN producto 
-ON detalle_alquiler.id_producto = producto.id_producto
+INNER JOIN producto
+ON detalle_alquiler.id_producto =
+producto.id_producto
 
-WHERE alquiler.id_cliente = '$id_usuario'
+WHERE alquiler.id_cliente =
+'$id_usuario'
 
 ORDER BY alquiler.id_alquiler DESC
 LIMIT 5";
 
-$resActividad = mysqli_query($conexion, $sqlActividad);
+$resActividad = mysqli_query(
+    $conexion,
+    $sqlActividad
+);
 
 ?>
 
@@ -119,11 +153,15 @@ $resActividad = mysqli_query($conexion, $sqlActividad);
 
 <title>Inicio Usuario - TICKETS-FET</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="css/userinicio.css">
+<link rel="stylesheet"
+href="css/userinicio.css">
 
-<script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
+<script
+src="https://kit.fontawesome.com/9d1a86738f.js"
+crossorigin="anonymous"></script>
 
 </head>
 
@@ -138,20 +176,29 @@ $resActividad = mysqli_query($conexion, $sqlActividad);
 </button>
 
 <div class="logo">
-<img src="img/logo_dashboard.png" alt="logo">
+<img
+src="img/logo_dashboard.png"
+alt="logo">
 </div>
 
 </div>
 
 <div class="search">
 
-<input type="text" placeholder="Buscar...">
+<input
+type="text"
+placeholder="Buscar...">
 
 <i class="fa-solid fa-magnifying-glass"></i>
 
 </div>
+
 <div class="icons">
-<form method="POST" action="logout.php" style="display:inline;">
+
+<form
+method="POST"
+action="logout.php"
+style="display:inline;">
 
 <button type="submit">
 <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -166,14 +213,20 @@ $resActividad = mysqli_query($conexion, $sqlActividad);
 <div>
 
 <p>
-<b><?php echo htmlspecialchars($usuario['nombre']); ?></b>
+
+<b>
+<?php echo htmlspecialchars($usuario['nombre']); ?>
+</b>
+
 </p>
 
 <small>Usuario</small>
 
 </div>
 
-<img src="img/avatar.png" alt="avatar">
+<img
+src="img/avatar.png"
+alt="avatar">
 
 </div>
 
@@ -186,31 +239,51 @@ $resActividad = mysqli_query($conexion, $sqlActividad);
 <ul>
 
 <li>
+
 <a href="userinicio.php">
+
 <i class="fa-solid fa-house"></i>
+
 <span>Inicio</span>
+
 </a>
+
 </li>
 
 <li>
+
 <a href="producto.php">
+
 <i class="fa-solid fa-box"></i>
+
 <span>Productos</span>
+
 </a>
+
 </li>
 
 <li>
+
 <a href="alquileruser.php">
+
 <i class="fa-solid fa-calendar"></i>
+
 <span>Alquiler</span>
+
 </a>
+
 </li>
 
 <li>
+
 <a href="configuracionuser.php">
+
 <i class="fa-solid fa-gear"></i>
+
 <span>Configuración</span>
+
 </a>
+
 </li>
 
 </ul>
@@ -226,6 +299,7 @@ Gestiona tus alquileres y actividad fácilmente.
 </p>
 
 <!-- CARDS -->
+
 <div class="cards">
 
 <div class="card">
@@ -267,9 +341,11 @@ Gestiona tus alquileres y actividad fácilmente.
 </div>
 
 <!-- CARDS GRANDES -->
+
 <div class="cards-large">
 
 <!-- PRÓXIMOS -->
+
 <div class="card-large">
 
 <h3>Próximos alquileres</h3>
@@ -277,7 +353,7 @@ Gestiona tus alquileres y actividad fácilmente.
 <?php
 if(mysqli_num_rows($resProximos) > 0){
 
-while($fila = mysqli_fetch_assoc($resProximos)){
+    while($fila = mysqli_fetch_assoc($resProximos)){
 ?>
 
 <div class="item">
@@ -287,13 +363,16 @@ while($fila = mysqli_fetch_assoc($resProximos)){
 </span>
 
 <span>
-<?php echo date("d/m/Y", strtotime($fila['fecha_fin'])); ?>
+<?php echo date(
+    "d/m/Y",
+    strtotime($fila['fecha_fin'])
+); ?>
 </span>
 
 </div>
 
 <?php
-}
+    }
 
 }else{
 ?>
@@ -307,6 +386,7 @@ No tienes alquileres activos
 </div>
 
 <!-- ACTIVIDAD -->
+
 <div class="card-large">
 
 <h3>Actividad reciente</h3>
@@ -314,7 +394,7 @@ No tienes alquileres activos
 <?php
 if(mysqli_num_rows($resActividad) > 0){
 
-while($fila = mysqli_fetch_assoc($resActividad)){
+    while($fila = mysqli_fetch_assoc($resActividad)){
 ?>
 
 <div class="item">
@@ -328,7 +408,7 @@ while($fila = mysqli_fetch_assoc($resActividad)){
 </div>
 
 <?php
-}
+    }
 
 }else{
 ?>
@@ -342,16 +422,25 @@ No hay actividad reciente
 </div>
 
 <!-- ACCESOS -->
+
 <div class="card-large">
 
 <h3>Accesos rápidos</h3>
 
-<a href="producto.php" class="btn-verde">
+<a
+href="producto.php"
+class="btn-verde">
+
 Ver productos
+
 </a>
 
-<a href="alquileruser.php" class="btn-verde">
+<a
+href="alquileruser.php"
+class="btn-verde">
+
 Nuevo alquiler
+
 </a>
 
 </div>
@@ -363,18 +452,22 @@ Nuevo alquiler
 </div>
 
 <footer class="footer">
+
 <small>Mariajose © 2026</small>
+
 </footer>
 
 <script>
 
-const btn = document.getElementById("menu-toggle");
+const btn =
+document.getElementById("menu-toggle");
 
-const sidebar = document.getElementById("sidebar");
+const sidebar =
+document.getElementById("sidebar");
 
 btn.addEventListener("click", ()=>{
 
-sidebar.classList.toggle("active");
+    sidebar.classList.toggle("active");
 
 });
 

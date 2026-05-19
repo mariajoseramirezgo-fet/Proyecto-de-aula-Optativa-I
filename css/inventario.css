@@ -55,18 +55,33 @@ body{
     background:transparent;
     outline:none;
 }
+/* =========================
+   LOGOUT
+========================= */
 
-.icons a{
+.icons{
     display:flex;
     align-items:center;
     justify-content:center;
-    text-decoration:none;
-
 }
 
-.icons a i{
-    font-size:70px;
+.icons button{
+    all:unset;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+.icons button i{
+    font-size:24px;
     color:#000;
+    transition:0.3s;
+}
+
+.icons button:hover i{
+    color:#20d214;
+    transform:scale(1.1);
 }
 /* USER */
 .user{
@@ -159,7 +174,7 @@ width:100%;
 }
 
 /* =========================
-   BUTTON
+    BUTTON
 ========================= */
 
 .btn-nuevo{
@@ -179,7 +194,7 @@ width:100%;
 }
 
 /* =========================
-   TABLA
+    TABLA
 ========================= */
 
 .tabla-productos{
@@ -293,7 +308,7 @@ width:100%;
 }
 
 /* =========================
-   MODAL
+    MODAL
 ========================= */
 
 .modal{
@@ -307,7 +322,6 @@ width:100%;
     backdrop-filter:blur(4px);
     z-index:999;
 }
-
 .modal-content{
     width:400px;
     background:#fff;
@@ -341,7 +355,14 @@ width:100%;
     flex-direction:column;
     gap:15px;
 }
-
+.modal-content select{
+    width:100%;
+    padding:10px;
+    border-radius:12px;
+    border:none;
+    background:#eee;
+    outline:none;
+}
 .modal-content input{
     padding:12px;
     border-radius:8px;
@@ -381,55 +402,11 @@ width:100%;
     background:#ddd;
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 .footer{
     margin-top:20px;
     text-align:center;
     padding:12px;
     background:#dcdcdc;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:1000px){
-
-    .search{
-        display:none;
-    }
-
-    .tabla-header,
-    .producto{
-        min-width:850px;
-    }
-
-    .tabla-productos{
-        overflow-x:auto;
-    }
-}
-
-@media(max-width:700px){
-
-    .header{
-        flex-wrap:wrap;
-        gap:15px;
-        height:auto;
-        padding:15px;
-    }
-
-    .user{
-        margin-left:auto;
-    }
-
-    .main-content{
-        padding:15px;
-    }
-
-    .modal-content{
-        width:90%;
-    }
 }

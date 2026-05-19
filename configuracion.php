@@ -54,13 +54,23 @@ if(isset($_POST['guardar_vendedor'])){
     $rol = "vendedor";
 
     $sql = "INSERT INTO empleado
-    (nombre, correo, password, rol)
+    (
+        nombre,
+        correo,
+        password,
+        rol
+    )
 
     VALUES
 
-    ('$nombre','$correo','$password','$rol')";
+    (
+        '$nombre',
+        '$correo',
+        '$password',
+        '$rol'
+    )";
 
-    if(!mysqli_query($conexion,$sql)){
+    if(!mysqli_query($conexion, $sql)){
         die("Error: " . mysqli_error($conexion));
     }
 
@@ -107,7 +117,7 @@ if(isset($_GET['eliminar'])){
 }
 
 /* =========================
-    ACTUALIZAR CUENTA
+   ACTUALIZAR CUENTA
 ========================= */
 if(isset($_POST['guardar_cuenta'])){
 
@@ -206,18 +216,14 @@ $notificaciones = mysqli_query(
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Configuración - SportHub</title>
+    <title>Configuración - SportHub</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet"
-href="css/configuracion.css?v=2">
-
-<script src="https://kit.fontawesome.com/9d1a86738f.js"
-crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"href="css/configuracion.css?v=1.0">
+    <link rel="stylesheet" href="css/mediaquerystickets.css?=1">
+    <script src="https://kit.fontawesome.com/9d1a86738f.js"crossorigin="anonymous"></script>
 
 </head>
 
@@ -225,383 +231,381 @@ crossorigin="anonymous"></script>
 
 <header class="header">
 
-<div class="menu">
+    <div class="menu">
 
-<button id="menu-toggle">
-<i class="fa-solid fa-bars"></i>
-</button>
+        <button id="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
 
-<div class="logo">
-<img src="img/logo_dashboard.png">
-</div>
+        <div class="logo">
+            <img src="img/logo_dashboard.png">
+        </div>
 
-</div>
+    </div>
 
-<div class="search">
+    <div class="search">
 
-<input type="text" placeholder="Buscar...">
+        <input type="text" placeholder="Buscar...">
 
-<i class="fa-solid fa-magnifying-glass"></i>
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-</div>
+    </div>
 
-<div class="icons">
-<button onclick="logout()">
-<i class="fa-solid fa-arrow-right-from-bracket"></i>
-</button>
+    <div class="icons">
 
-</div>
+        <button onclick="logout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
 
-<div class="user">
+    </div>
 
-<div>
+    <div class="user">
 
-<p>
-<b>
-<?php echo htmlspecialchars($_SESSION['usuario']['nombre'] ?? ''); ?>
-</b>
-</p>
+        <div>
 
-<small>Administrador de tienda</small>
+            <p>
+                <b>
+                    <?php echo htmlspecialchars($_SESSION['usuario']['nombre'] ?? ''); ?>
+                </b>
+            </p>
 
-</div>
+            <small>Administrador</small>
 
-<img src="img/avatar.png">
+        </div>
 
-</div>
+        <img src="img/avatar.png">
+
+    </div>
 
 </header>
 
 <div class="container">
 
-<!-- SIDEBAR -->
+    <!-- SIDEBAR -->
 
-<aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar">
 
-<ul>
+        <ul>
 
-<li>
-<a href="dashboard.php">
-<i class="fa-solid fa-house"></i>
-<span>Dashboard</span>
-</a>
-</li>
+            <li>
+                <a href="dashboard.php">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
 
-<li>
-<a href="inventario.php">
-<i class="fa-solid fa-box"></i>
-<span>Inventario</span>
-</a>
-</li>
+            <li>
+                <a href="inventario.php">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Inventario</span>
+                </a>
+            </li>
 
-<li>
-<a href="alquileres.php">
-<i class="fa-solid fa-calendar"></i>
-<span>Alquileres</span>
-</a>
-</li>
+            <li>
+                <a href="alquileres.php">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Alquileres</span>
+                </a>
+            </li>
 
-<li>
-<a href="reportes.php">
-<i class="fa-solid fa-chart-line"></i>
-<span>Reportes</span>
-</a>
-</li>
+            <li>
+                <a href="reportes.php">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
 
-<li>
-<a href="tickets.php">
-<i class="fa-solid fa-ticket"></i>
-<span>Tickets</span>
-</a>
-</li>
+            <li>
+                <a href="tickets.php">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Tickets</span>
+                </a>
+            </li>
 
-<li>
-<a href="clientes.php">
-<i class="fa-solid fa-users"></i>
-<span>Clientes</span>
-</a>
-</li>
+            <li>
+                <a href="clientes.php">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+            </li>
 
-<li>
-<a href="configuracion.php">
-<i class="fa-solid fa-gear"></i>
-<span>Configuración</span>
-</a>
-</li>
+            <li>
+                <a href="configuracion.php">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Configuración</span>
+                </a>
+            </li>
 
-</ul>
+        </ul>
 
-</aside>
+    </aside>
 
-<!-- MAIN -->
+    <!-- MAIN -->
 
-<main class="main">
+    <main class="main">
 
-<h1>CONFIGURACIÓN</h1>
+        <h1>CONFIGURACIÓN</h1>
 
-<p>
-Administra tu cuenta,
-usuarios y preferencias del sistema.
-</p>
+        <p> Administra tu cuenta,
+            usuarios y preferencias del sistema.</p>
 
-<div class="config-container">
+        <div class="config-container">
 
-<!-- MENU -->
+            <!-- MENU -->
 
-<div class="config-menu">
+            <div class="config-menu">
 
-<ul>
+                <ul>
 
-<li data-seccion="cuenta" class="activo">
-Cuenta
-</li>
+                    <li data-seccion="cuenta" class="activo">
+                        Cuenta
+                    </li>
 
-<li data-seccion="vendedores">
-Vendedores
-</li>
+                    <li data-seccion="vendedores">
+                        Vendedores
+                    </li>
 
-<li data-seccion="notificaciones">
-Notificaciones
-</li>
+                    <li data-seccion="notificaciones">
+                        Notificaciones
+                    </li>
 
-<li data-seccion="seguridad">
-Seguridad
-</li>
+                    <li data-seccion="seguridad">
+                        Seguridad
+                    </li>
 
-</ul>
+                </ul>
 
-</div>
+            </div>
 
-<!-- CONTENIDO -->
+            <!-- CONTENIDO -->
 
-<div class="config-content">
+            <div class="config-content">
 
-<!-- CUENTA -->
+                <!-- CUENTA -->
 
-<div id="cuenta" class="seccion">
+                <div id="cuenta" class="seccion">
 
-<h2>ADMINISTRAR CUENTA</h2>
+                    <h2>ADMINISTRAR CUENTA</h2>
 
-<div class="perfil-card">
+                    <div class="perfil-card">
 
-<img src="img/avatar.png">
+                        <img src="img/avatar.png">
 
-<div class="perfil-form">
+                        <div class="perfil-form">
 
-<form method="POST">
+                            <form method="POST">
 
-<label>Nombre</label>
+                                <label>Nombre</label>
 
-<input
-type="text"
-name="nombre_cuenta"
-value="<?php echo htmlspecialchars($_SESSION['usuario']['nombre'] ?? ''); ?>"
-required>
+                                <input
+                                    type="text"
+                                    name="nombre_cuenta"
+                                    value="<?php echo htmlspecialchars($_SESSION['usuario']['nombre'] ?? ''); ?>"
+                                    required
+                                >
 
-<label>Correo</label>
+                                <label>Correo</label>
 
-<input
-type="email"
-name="correo_cuenta"
-value="<?php echo htmlspecialchars($_SESSION['usuario']['correo'] ?? ''); ?>"
-required>
+                                <input
+                                    type="email"
+                                    name="correo_cuenta"
+                                    value="<?php echo htmlspecialchars($_SESSION['usuario']['correo'] ?? ''); ?>"
+                                    required
+                                >
 
-<label>Contraseña</label>
+                                <button
+                                    class="btn-verde"
+                                    name="guardar_cuenta"
+                                >
+                                    Guardar cambios
+                                </button>
 
-<input
-type="password"
-name="password_cuenta"
-required>
+                            </form>
 
-<button
-class="btn-verde"
-name="guardar_cuenta">
+                        </div>
 
-Guardar cambios
+                    </div>
 
-</button>
+                </div>
 
-</form>
+                <!-- VENDEDORES -->
 
-</div>
+                <div id="vendedores" class="seccion oculto">
 
-</div>
+                    <h2>GESTIÓN DE VENDEDORES</h2>
 
-</div>
+                    <button
+                        class="btn-verde"
+                        onclick="abrirFormulario()"
+                    >
+                        + Designar vendedor
+                    </button>
 
-<!-- VENDEDORES -->
+                    <table class="tabla">
 
-<div id="vendedores" class="seccion oculto">
+                        <tr>
 
-<h2>GESTIÓN DE VENDEDORES</h2>
+                            <th>Nombre</th>
 
-<button
-class="btn-verde"
-onclick="abrirFormulario()">
+                            <th>Correo</th>
 
-+ Designar vendedor
+                            <th>Rol</th>
 
-</button>
+                            <th>Acción</th>
 
-<table class="tabla">
+                        </tr>
 
-<tr>
+                        <tbody>
 
-<th>Nombre</th>
+                            <?php while($v = mysqli_fetch_assoc($vendedores)) { ?>
 
-<th>Correo</th>
+                            <tr>
 
-<th>Rol</th>
+                                <td>
+                                    <?php echo htmlspecialchars($v['nombre']); ?>
+                                </td>
 
-<th>Acción</th>
+                                <td>
+                                    <?php echo htmlspecialchars($v['correo']); ?>
+                                </td>
 
-</tr>
+                                <td>
+                                    <?php echo htmlspecialchars($v['rol']); ?>
+                                </td>
 
-<tbody>
+                                <td>
 
-<?php while($v = mysqli_fetch_assoc($vendedores)) { ?>
+                                    <a
+                                        href="configuracion.php?eliminar=<?php echo $v['id_empleado']; ?>"
+                                        onclick="return confirm(
+                                        '¿Seguro deseas eliminar?'
+                                        )"
+                                        class="btn-rojo"
+                                    >
+                                        Eliminar
+                                    </a>
 
-<tr>
+                                </td>
 
-<td>
-<?php echo htmlspecialchars($v['nombre']); ?>
-</td>
+                            </tr>
 
-<td>
-<?php echo htmlspecialchars($v['correo']); ?>
-</td>
+                            <?php } ?>
 
-<td>
-<?php echo htmlspecialchars($v['rol']); ?>
-</td>
+                        </tbody>
 
-<td>
+                    </table>
 
-<a href="configuracion.php?eliminar=<?php echo $v['id_empleado']; ?>"
+                    <div
+                        id="formVendedor"
+                        class="formulario oculto"
+                    >
 
-onclick="return confirm(
-'¿Seguro deseas eliminar?'
-)"
+                        <h3>Nuevo vendedor</h3>
 
-class="btn-rojo">
+                        <form method="POST">
 
-Eliminar
+                            <input
+                                type="text"
+                                name="nombre"
+                                placeholder="Nombre"
+                                required
+                            >
 
-</a>
+                            <input
+                                type="email"
+                                name="correo"
+                                placeholder="Correo"
+                                required
+                            >
 
-</td>
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Contraseña"
+                                required
+                            >
 
-</tr>
+                            <button
+                                class="btn-verde"
+                                name="guardar_vendedor"
+                            >
+                                Guardar
+                            </button>
 
-<?php } ?>
+                        </form>
 
-</tbody>
+                    </div>
 
-</table>
+                </div>
 
-<div id="formVendedor"
-class="formulario oculto">
+                <!-- NOTIFICACIONES -->
 
-<h3>Nuevo vendedor</h3>
+                <div
+                    id="notificaciones"
+                    class="seccion oculto"
+                >
 
-<form method="POST">
+                    <h2>NOTIFICACIONES</h2>
 
-<input
-type="text"
-name="nombre"
-placeholder="Nombre"
-required>
+                    <?php while($n = mysqli_fetch_assoc($notificaciones)) { ?>
 
-<input
-type="email"
-name="correo"
-placeholder="Correo"
-required>
+                    <div class="alerta verde">
 
-<input
-type="password"
-name="password"
-placeholder="Contraseña"
-required>
+                        ✔ <?php echo htmlspecialchars($n['mensaje']); ?>
 
-<button
-class="btn-verde"
-name="guardar_vendedor">
+                        <br>
 
-Guardar
+                        <small>
+                            <?php echo $n['fecha']; ?>
+                        </small>
 
-</button>
+                    </div>
 
-</form>
+                    <?php } ?>
 
-</div>
+                </div>
 
-</div>
+                <!-- SEGURIDAD -->
 
-<!-- NOTIFICACIONES -->
+                <div
+                    id="seguridad"
+                    class="seccion oculto"
+                >
 
-<div id="notificaciones"
-class="seccion oculto">
+                    <h2>SEGURIDAD</h2>
 
-<h2>NOTIFICACIONES</h2>
+                    <form method="POST">
 
-<?php while($n = mysqli_fetch_assoc($notificaciones)) { ?>
+                        <label>Nueva contraseña</label>
 
-<div class="alerta verde">
+                        <input
+                            type="password"
+                            name="nueva_password"
+                            required
+                        >
 
-✔ <?php echo htmlspecialchars($n['mensaje']); ?>
+                        <button
+                            class="btn-verde"
+                            name="cambiar_password"
+                        >
+                            Actualizar contraseña
+                        </button>
 
-<br>
+                    </form>
 
-<small>
-<?php echo $n['fecha']; ?>
-</small>
+                </div>
 
-</div>
+            </div>
 
-<?php } ?>
+        </div>
 
-</div>
-
-<!-- SEGURIDAD -->
-
-<div id="seguridad"
-class="seccion oculto">
-
-<h2>SEGURIDAD</h2>
-
-<form method="POST">
-
-<label>Nueva contraseña</label>
-
-<input
-type="password"
-name="nueva_password"
-required>
-
-<button
-class="btn-verde"
-name="cambiar_password">
-
-Actualizar contraseña
-
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-</main>
+    </main>
 
 </div>
 
 <footer class="footer">
 
-<small>Mariajose © 2026</small>
+    <small>Mariajose © 2026</small>
 
 </footer>
 
@@ -612,8 +616,8 @@ Actualizar contraseña
 document.getElementById("menu-toggle")
 .addEventListener("click", ()=>{
 
-document.getElementById("sidebar")
-.classList.toggle("active");
+    document.getElementById("sidebar")
+    .classList.toggle("active");
 
 });
 
@@ -621,7 +625,7 @@ document.getElementById("sidebar")
 
 function logout(){
 
-window.location.href="logout.php";
+    window.location.href="logout.php";
 
 }
 
@@ -635,27 +639,27 @@ document.querySelectorAll(".seccion");
 
 items.forEach(item=>{
 
-item.addEventListener("click", ()=>{
+    item.addEventListener("click", ()=>{
 
-secciones.forEach(sec=>{
+        secciones.forEach(sec=>{
 
-sec.classList.add("oculto");
+            sec.classList.add("oculto");
 
-});
+        });
 
-items.forEach(i=>{
+        items.forEach(i=>{
 
-i.classList.remove("activo");
+            i.classList.remove("activo");
 
-});
+        });
 
-document
-.getElementById(item.dataset.seccion)
-.classList.remove("oculto");
+        document
+        .getElementById(item.dataset.seccion)
+        .classList.remove("oculto");
 
-item.classList.add("activo");
+        item.classList.add("activo");
 
-});
+    });
 
 });
 
@@ -663,8 +667,8 @@ item.classList.add("activo");
 
 function abrirFormulario(){
 
-document.getElementById("formVendedor")
-.classList.toggle("oculto");
+    document.getElementById("formVendedor")
+    .classList.toggle("oculto");
 
 }
 

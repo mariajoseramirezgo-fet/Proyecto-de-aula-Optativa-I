@@ -11,7 +11,8 @@
 
     main{
         height:  40%;
-
+        padding: 10px;
+    }
     .card{
         width: 500px;
         padding: 50px 35px;
@@ -27,7 +28,7 @@
 
     .input-login,
     .btn-enviar{
-        width: 120%;
+        max-width: 100%;
         font-size: 14px;
         padding: 10px;
     }
@@ -36,7 +37,7 @@
     .extra-links a{
         font-size: 13px;
     }
-}
+
 
 /* FOOTER */ 
 footer{ 

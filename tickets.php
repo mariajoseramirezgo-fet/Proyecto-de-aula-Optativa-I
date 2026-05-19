@@ -3,7 +3,9 @@ session_start();
 include("conexion.php");
 
 // VALIDAR SESIÓN
+
 if (!isset($_SESSION['usuario'])) {
+
     header("Location: index.php");
     exit();
 }
@@ -11,11 +13,12 @@ if (!isset($_SESSION['usuario'])) {
 /* =========================
    GUARDAR TICKET
 ========================= */
+
 if(isset($_POST['guardar'])){
 
     $nombreProducto = mysqli_real_escape_string(
-    $conexion,
-    $_POST['producto']
+        $conexion,
+        $_POST['producto']
     );
 
     $problema = $_POST['problema'];
@@ -30,10 +33,12 @@ if(isset($_POST['guardar'])){
        BUSCAR PRODUCTO
     ========================= */
 
-    $buscarProducto = mysqli_query($conexion,"
+    $buscarProducto = mysqli_query($conexion, "
+
     SELECT id_producto
     FROM producto
     WHERE nombre='$nombreProducto'
+
     ");
 
     if(mysqli_num_rows($buscarProducto) == 0){
@@ -49,16 +54,31 @@ if(isset($_POST['guardar'])){
        INSERTAR
     ========================= */
 
-    $sql = "INSERT INTO ticket 
-    (id_producto, id_empleado, tipo, descripcion, estado, fecha, prioridad)
+    $sql = "INSERT INTO ticket
+    (
+        id_producto,
+        id_empleado,
+        tipo,
+        descripcion,
+        estado,
+        fecha,
+        prioridad
+    )
 
-    VALUES 
+    VALUES
 
-    ('$id_producto', 1, '$problema',
-    '$detalle', 'ABIERTO',
-    NOW(), '$prioridad')";
+    (
+        '$id_producto',
+        1,
+        '$problema',
+        '$detalle',
+        'ABIERTO',
+        NOW(),
+        '$prioridad'
+    )";
 
     if(!mysqli_query($conexion, $sql)){
+
         die("Error: " . mysqli_error($conexion));
     }
 
@@ -69,12 +89,15 @@ if(isset($_POST['guardar'])){
 /* =========================
    ELIMINAR
 ========================= */
+
 if(isset($_GET['eliminar'])){
 
     $id = $_GET['eliminar'];
 
-    mysqli_query($conexion,
-    "DELETE FROM ticket WHERE id_ticket=$id");
+    mysqli_query(
+        $conexion,
+        "DELETE FROM ticket WHERE id_ticket=$id"
+    );
 
     header("Location: tickets.php");
 
@@ -117,10 +140,18 @@ if(isset($_POST['editar'])){
    CONSULTA
 ========================= */
 
-$sql = "SELECT t.*, p.nombre AS producto
-        FROM ticket t
-        INNER JOIN producto p 
-        ON t.id_producto = p.id_producto";
+$sql = "
+
+SELECT
+t.*,
+p.nombre AS producto
+
+FROM ticket t
+
+INNER JOIN producto p
+ON t.id_producto = p.id_producto
+
+";
 
 $resultado = mysqli_query($conexion, $sql);
 
@@ -128,17 +159,17 @@ $resultado = mysqli_query($conexion, $sql);
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
 
 <title>Tickets - SportHub</title>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/tickets.css">
+<link rel="stylesheet"href="css/tickets.css?=2">
+<link rel="stylesheet"href="css/mediaquerystickets.css?=1">
 
 <script src="https://kit.fontawesome.com/9d1a86738f.js"></script>
 
@@ -148,207 +179,275 @@ content="width=device-width, initial-scale=1.0">
 
 <header class="header">
 
-<div class="menu">
+    <div class="menu">
 
-<button id="menu-toggle">
-<i class="fa-solid fa-bars"></i>
-</button>
+        <button id="menu-toggle">
 
-<div class="logo">
-<img src="img/logo_dashboard.png">
-</div>
+            <i class="fa-solid fa-bars"></i>
 
-</div>
+        </button>
 
-<div class="search">
+        <div class="logo">
 
-<input type="text" placeholder="Buscar...">
+            <img src="img/logo_dashboard.png">
 
-<i class="fa-solid fa-magnifying-glass"></i>
+        </div>
 
-</div>
+    </div>
 
-<div class="icons">
-<button onclick="logout()">
-<i class="fa-solid fa-arrow-right-from-bracket"></i>
-</button>
+    <div class="search">
 
-</div>
+        <input
+        type="text"
+        placeholder="Buscar..."
+        >
 
-<div class="user">
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-<div>
-<p><b><?php echo $_SESSION['usuario']['nombre']; ?></b></p>
-<small>Administrador</small>
-</div>
+    </div>
 
-<img src="img/avatar.png">
+    <div class="icons">
 
-</div>
+        <button onclick="logout()">
+
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+        </button>
+
+    </div>
+
+    <div class="user">
+
+        <div>
+
+            <p>
+                <b>
+                    <?php echo $_SESSION['usuario']['nombre']; ?>
+                </b>
+            </p>
+
+            <small>Administrador</small>
+
+        </div>
+
+        <img src="img/avatar.png">
+
+    </div>
 
 </header>
 
 <div class="container">
 
-<!-- SIDEBAR -->
+    <!-- SIDEBAR -->
 
-<aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar">
 
-<ul>
+        <ul>
 
-<li>
-<a href="dashboard.php">
-<i class="fa-solid fa-house"></i>
-<span>Dashboard</span>
-</a>
-</li>
+            <li>
 
-<li>
-<a href="inventario.php">
-<i class="fa-solid fa-box"></i>
-<span>Inventario</span>
-</a>
-</li>
+                <a href="dashboard.php">
 
-<li>
-<a href="alquileres.php">
-<i class="fa-solid fa-calendar"></i>
-<span>Alquileres</span>
-</a>
-</li>
+                    <i class="fa-solid fa-house"></i>
 
-<li>
-<a href="reportes.php">
-<i class="fa-solid fa-chart-line"></i>
-<span>Reportes</span>
-</a>
-</li>
+                    <span>Dashboard</span>
 
-<li>
-<a href="tickets.php">
-<i class="fa-solid fa-ticket"></i>
-<span>Tickets</span>
-</a>
-</li>
+                </a>
 
-<li>
-<a href="clientes.php">
-<i class="fa-solid fa-users"></i>
-<span>Clientes</span>
-</a>
-</li>
+            </li>
 
-<li>
-<a href="configuracion.php">
-<i class="fa-solid fa-gear"></i>
-<span>Configuración</span>
-</a>
-</li>
+            <li>
 
-</ul>
+                <a href="inventario.php">
 
-</aside>
+                    <i class="fa-solid fa-box"></i>
 
-<!-- CONTENIDO -->
+                    <span>Inventario</span>
 
-<main class="main-content">
+                </a>
 
-<h2>Sistema de tickets</h2>
+            </li>
 
-<p>
-Controla problemas, reportes y estado de productos.
-</p>
+            <li>
 
-<button class="btn-nuevo" onclick="abrirModal()">
-+ NUEVO TICKET
-</button>
+                <a href="alquileres.php">
 
-<div class="tabla-productos">
+                    <i class="fa-solid fa-calendar"></i>
 
-<div class="tabla-header">
+                    <span>Alquileres</span>
 
-<span>Producto</span>
+                </a>
 
-<span>Problema</span>
+            </li>
 
-<span>Descripción</span>
+            <li>
 
-<span>Prioridad</span>
+                <a href="reportes.php">
 
-<span>Estado</span>
+                    <i class="fa-solid fa-chart-line"></i>
 
-<span>Acciones</span>
+                    <span>Reportes</span>
 
-</div>
+                </a>
 
-<?php while($row = mysqli_fetch_assoc($resultado)) { ?>
+            </li>
 
-<div class="producto">
+            <li>
 
-<div class="producto-info">
+                <a href="tickets.php">
 
-<i class="fa-solid fa-box"></i>
+                    <i class="fa-solid fa-ticket"></i>
 
-<div>
-<b><?php echo $row['producto']; ?></b>
-</div>
+                    <span>Tickets</span>
 
-</div>
+                </a>
 
-<div class="problema">
-<?php echo $row['tipo']; ?>
-</div>
+            </li>
 
-<div>
-<?php echo $row['descripcion']; ?>
-</div>
+            <li>
 
-<span class="prioridad <?php echo strtolower($row['prioridad']); ?>">
+                <a href="clientes.php">
 
-<?php echo $row['prioridad']; ?>
+                    <i class="fa-solid fa-users"></i>
 
-</span>
+                    <span>Clientes</span>
 
-<span class="estado abierto">
+                </a>
 
-<?php echo $row['estado']; ?>
+            </li>
 
-</span>
+            <li>
 
-<div class="acciones">
+                <a href="configuracion.php">
 
-<i class="fa-solid fa-trash"
-onclick="confirmarEliminar(
-<?php echo $row['id_ticket']; ?>
-)"></i>
+                    <i class="fa-solid fa-gear"></i>
 
-<i class="fa-solid fa-pencil"
+                    <span>Configuración</span>
 
-onclick="abrirModalEditar(
+                </a>
 
-'<?php echo $row['id_ticket']; ?>',
+            </li>
 
-'<?php echo $row['producto']; ?>',
+        </ul>
 
-'<?php echo $row['tipo']; ?>',
+    </aside>
 
-'<?php echo $row['descripcion']; ?>',
+    <!-- CONTENIDO -->
 
-'<?php echo $row['prioridad']; ?>',
+    <main class="main-content">
 
-'<?php echo $row['estado']; ?>'
+        <h2>Sistema de tickets</h2>
 
-)"></i>
+        <p>
+            Controla problemas, reportes y estado de productos.
+        </p>
 
-</div>
+        <button
+        class="btn-nuevo"
+        onclick="abrirModal()"
+        >
+            + NUEVO TICKET
+        </button>
 
-</div>
+        <div class="tabla-productos">
 
-<?php } ?>
+            <div class="tabla-header">
 
-</div>
+                <span>Producto</span>
 
-</main>
+                <span>Problema</span>
+
+                <span>Descripción</span>
+
+                <span>Prioridad</span>
+
+                <span>Estado</span>
+
+                <span>Acciones</span>
+
+            </div>
+
+            <?php while($row = mysqli_fetch_assoc($resultado)) { ?>
+
+            <div class="producto">
+
+                <div class="producto-info">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    <div>
+
+                        <b>
+                            <?php echo $row['producto']; ?>
+                        </b>
+
+                    </div>
+
+                </div>
+
+                <div class="problema">
+
+                    <?php echo $row['tipo']; ?>
+
+                </div>
+
+                <div>
+
+                    <?php echo $row['descripcion']; ?>
+
+                </div>
+
+                <span class="prioridad <?php echo strtolower($row['prioridad']); ?>">
+
+                    <?php echo $row['prioridad']; ?>
+
+                </span>
+
+                <span class="estado abierto">
+
+                    <?php echo $row['estado']; ?>
+
+                </span>
+
+                <div class="acciones">
+
+                    <i
+                    class="fa-solid fa-trash"
+
+                    onclick="confirmarEliminar(
+                    <?php echo $row['id_ticket']; ?>
+                    )">
+                    </i>
+
+                    <i
+                    class="fa-solid fa-pencil"
+
+                    onclick="abrirModalEditar(
+
+                    '<?php echo $row['id_ticket']; ?>',
+
+                    '<?php echo $row['producto']; ?>',
+
+                    '<?php echo $row['tipo']; ?>',
+
+                    '<?php echo $row['descripcion']; ?>',
+
+                    '<?php echo $row['prioridad']; ?>',
+
+                    '<?php echo $row['estado']; ?>'
+
+                    )">
+                    </i>
+
+                </div>
+
+            </div>
+
+            <?php } ?>
+
+        </div>
+
+    </main>
 
 </div>
 
@@ -356,105 +455,119 @@ onclick="abrirModalEditar(
 
 <div id="modal" class="modal">
 
-<div class="modal-content">
+    <div class="modal-content">
 
-<h3>Ticket</h3>
+        <h3>Ticket</h3>
 
-<form method="POST">
+        <form method="POST">
 
-<input type="hidden"
-name="id_ticket"
-id="id_ticket">
+            <input
+            type="hidden"
+            name="id_ticket"
+            id="id_ticket"
+            >
 
-<input
-name="producto"
-id="producto"
-type="text"
-placeholder="Producto"
-required>
+            <input
+            name="producto"
+            id="producto"
+            type="text"
+            placeholder="Producto"
+            required
+            >
 
-<input
-name="problema"
-id="problema"
-type="text"
-placeholder="Problema"
-required>
+            <input
+            name="problema"
+            id="problema"
+            type="text"
+            placeholder="Problema"
+            required
+            >
 
-<input
-name="detalle"
-id="detalle"
-type="text"
-placeholder="Detalle"
-required>
+            <input
+            name="detalle"
+            id="detalle"
+            type="text"
+            placeholder="Detalle"
+            required
+            >
 
-<input
-name="reportado"
-id="reportado"
-type="text"
-placeholder="Reportado por"
-required>
+            <input
+            name="reportado"
+            id="reportado"
+            type="text"
+            placeholder="Reportado por"
+            required
+            >
 
-<select name="prioridad" id="prioridad">
+            <select name="prioridad" id="prioridad">
 
-<option value="BAJA">Baja</option>
+                    <option value="BAJA">
+                        Baja
+                    </option>
 
-<option value="MEDIA">Media</option>
+                    <option value="MEDIA">
+                        Media
+                    </option>
 
-<option value="ALTA">Alta</option>
+                    <option value="ALTA">
+                        Alta
+                    </option>
 
-</select>
+                </select>
 
-<select name="estado" id="estado">
+            <select name="estado" id="estado">
 
-<option value="ABIERTO">
-ABIERTO
-</option>
+                    <option value="ABIERTO">
+                        ABIERTO
+                    </option>
 
-<option value="EN PROCESO">
-EN PROCESO
-</option>
+                    <option value="EN PROCESO">
+                        EN PROCESO
+                    </option>
 
-<option value="CERRADO">
-CERRADO
-</option>
+                    <option value="CERRADO">
+                        CERRADO
+                    </option>
 
-</select>
+                </select>
 
-<button
-type="submit"
-name="guardar"
-id="btnGuardar">
+                <div class="modal-buttons">
 
-Guardar
+    <button
+    type="submit"
+    name="guardar"
+    id="btnGuardar">
+        Guardar
+    </button>
 
-</button>
+    <button
+    type="submit"
+    name="editar"
+    id="btnEditar"
+    style="display:none;">
+        Editar
+    </button>
 
-<button
-type="submit"
-name="editar"
-id="btnEditar"
-style="display:none;">
-
-Editar
-
-</button>
-
-<button
-type="button"
-onclick="cerrarModal()">
-
-Cancelar
-
-</button>
-
-</form>
+    <button
+    type="button"
+    onclick="cerrarModal()">
+        Cancelar
+    </button>
 
 </div>
+
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
 
 <footer class="footer">
-<small>Mariajose © 2026</small>
+
+    <small>Mariajose © 2026</small>
+
 </footer>
 
 <script>
@@ -463,7 +576,7 @@ Cancelar
 
 function logout(){
 
-window.location.href="logout.php";
+    window.location.href = "logout.php";
 
 }
 
@@ -472,8 +585,8 @@ window.location.href="logout.php";
 document.getElementById("menu-toggle")
 .addEventListener("click", () => {
 
-document.getElementById("sidebar")
-.classList.toggle("active");
+    document.getElementById("sidebar")
+    .classList.toggle("active");
 
 });
 
@@ -481,70 +594,74 @@ document.getElementById("sidebar")
 
 function abrirModal(){
 
-document.getElementById("modal").style.display = "block";
+    document.getElementById("modal").style.display = "block";
 
-// LIMPIAR
-document.getElementById("id_ticket").value = "";
+    // LIMPIAR
 
-document.getElementById("producto").value = "";
+    document.getElementById("id_ticket").value = "";
 
-document.getElementById("problema").value = "";
+    document.getElementById("producto").value = "";
 
-document.getElementById("detalle").value = "";
+    document.getElementById("problema").value = "";
 
-document.getElementById("reportado").value = "";
+    document.getElementById("detalle").value = "";
 
-document.getElementById("prioridad").value = "MEDIA";
+    document.getElementById("reportado").value = "";
 
-document.getElementById("estado").value = "ABIERTO";
+    document.getElementById("prioridad").value = "MEDIA";
 
-// BOTONES
-document.getElementById("btnGuardar").style.display =
-"inline-block";
+    document.getElementById("estado").value = "ABIERTO";
 
-document.getElementById("btnEditar").style.display =
-"none";
+    // BOTONES
+
+    document.getElementById("btnGuardar").style.display =
+    "inline-block";
+
+    document.getElementById("btnEditar").style.display =
+    "none";
 
 }
 
 function cerrarModal(){
 
-document.getElementById("modal").style.display = "none";
+    document.getElementById("modal").style.display = "none";
 
 }
 
 // EDITAR
 
 function abrirModalEditar(
-id,
-producto,
-problema,
-detalle,
-prioridad,
-estado
+    id,
+    producto,
+    problema,
+    detalle,
+    prioridad,
+    estado
 ){
 
-document.getElementById("modal").style.display = "block";
+    document.getElementById("modal").style.display = "block";
 
-// LLENAR CAMPOS
-document.getElementById("id_ticket").value = id;
+    // LLENAR CAMPOS
 
-document.getElementById("producto").value = producto;
+    document.getElementById("id_ticket").value = id;
 
-document.getElementById("problema").value = problema;
+    document.getElementById("producto").value = producto;
 
-document.getElementById("detalle").value = detalle;
+    document.getElementById("problema").value = problema;
 
-document.getElementById("prioridad").value = prioridad;
+    document.getElementById("detalle").value = detalle;
 
-document.getElementById("estado").value = estado;
+    document.getElementById("prioridad").value = prioridad;
 
-// BOTONES
-document.getElementById("btnGuardar").style.display =
-"none";
+    document.getElementById("estado").value = estado;
 
-document.getElementById("btnEditar").style.display =
-"inline-block";
+    // BOTONES
+
+    document.getElementById("btnGuardar").style.display =
+    "none";
+
+    document.getElementById("btnEditar").style.display =
+    "inline-block";
 
 }
 
@@ -552,14 +669,14 @@ document.getElementById("btnEditar").style.display =
 
 function confirmarEliminar(id){
 
-if(confirm(
-"¿Seguro que deseas eliminar este ticket?"
-)){
+    if(confirm(
+    "¿Seguro que deseas eliminar este ticket?"
+    )){
 
-window.location.href =
-"tickets.php?eliminar=" + id;
+        window.location.href =
+        "tickets.php?eliminar=" + id;
 
-}
+    }
 
 }
 

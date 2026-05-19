@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Registro - TICKETS-FET</title>
 
-<link rel="stylesheet" href="css/mediaquerys.css">
+<link rel="stylesheet" href="css/mediaquerys.css?=2">
 <link rel="stylesheet" href="css/reset.css">
 <link rel="stylesheet" href="css/default.css?v=1">
 <link rel="shortcut icon" href="img/icon.png">

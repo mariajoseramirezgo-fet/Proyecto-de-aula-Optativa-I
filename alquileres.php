@@ -3,7 +3,9 @@ session_start();
 include("conexion.php");
 
 // VALIDAR SESIÓN
+
 if (!isset($_SESSION['usuario'])) {
+
     header("Location: index.php");
     exit();
 }
@@ -11,29 +13,59 @@ if (!isset($_SESSION['usuario'])) {
 /* =========================
     GUARDAR / EDITAR ALQUILER
 ========================= */
+
 if(isset($_POST['alquilar'])){
 
     $id_alquiler = $_POST['id_alquiler'] ?? "";
+
     // LIMPIAR DATOS
-    $producto = mysqli_real_escape_string($conexion, $_POST['producto']);
-    $cliente = mysqli_real_escape_string($conexion, $_POST['cliente']);
-    $total = mysqli_real_escape_string($conexion, $_POST['precio']);
-    $cantidad = mysqli_real_escape_string($conexion, $_POST['cantidad']);
-    $estado = mysqli_real_escape_string($conexion, $_POST['estado']);
+
+    $producto = mysqli_real_escape_string(
+        $conexion,
+        $_POST['producto']
+    );
+
+    $cliente = mysqli_real_escape_string(
+        $conexion,
+        $_POST['cliente']
+    );
+
+    $total = mysqli_real_escape_string(
+        $conexion,
+        $_POST['precio']
+    );
+
+    $cantidad = mysqli_real_escape_string(
+        $conexion,
+        $_POST['cantidad']
+    );
+
+    $estado = mysqli_real_escape_string(
+        $conexion,
+        $_POST['estado']
+    );
 
     // BUSCAR CLIENTE
+
     $buscar_cliente = mysqli_query($conexion, "
-    SELECT id_cliente 
-    FROM cliente 
+
+    SELECT id_cliente
+
+    FROM cliente
+
     WHERE nombre = '$cliente'
+
     ");
 
     if(mysqli_num_rows($buscar_cliente) == 0){
 
         echo "
         <script>
+
             alert('Cliente no encontrado');
+
             window.location='alquileres.php';
+
         </script>
         ";
 
@@ -45,18 +77,23 @@ if(isset($_POST['alquilar'])){
     $id_cliente = $datos_cliente['id_cliente'];
 
     // EMPLEADO
-    $id_empleado = $_SESSION['usuario']['id_usuario'] ?? 1;
+
+    $id_empleado =
+    $_SESSION['usuario']['id_usuario'] ?? 1;
 
     /* =========================
         EDITAR
     ========================= */
+
     if($id_alquiler != ""){
 
         $sqlEditar = "UPDATE alquiler SET
+
         producto='$producto',
         id_cliente='$id_cliente',
         estado='$estado',
         total='$total'
+
         WHERE id_alquiler='$id_alquiler'";
 
         mysqli_query($conexion, $sqlEditar);
@@ -65,9 +102,10 @@ if(isset($_POST['alquilar'])){
     /* =========================
         CREAR
     ========================= */
+
     else{
 
-        $sql = "INSERT INTO alquiler 
+        $sql = "INSERT INTO alquiler
         (
             producto,
             id_cliente,
@@ -79,6 +117,7 @@ if(isset($_POST['alquilar'])){
         )
 
         VALUES
+
         (
             '$producto',
             '$id_cliente',
@@ -99,13 +138,17 @@ if(isset($_POST['alquilar'])){
 /* =========================
     ELIMINAR
 ========================= */
+
 if(isset($_GET['eliminar'])){
 
     $id = $_GET['eliminar'];
 
-    mysqli_query($conexion,"
+    mysqli_query($conexion, "
+
     DELETE FROM alquiler
+
     WHERE id_alquiler='$id'
+
     ");
 
     header("Location: alquileres.php");
@@ -115,9 +158,10 @@ if(isset($_GET['eliminar'])){
 /* =========================
     LISTAR ALQUILERES
 ========================= */
+
 $alquileres = mysqli_query($conexion, "
 
-SELECT 
+SELECT
 a.*,
 c.nombre AS cliente_nombre
 
@@ -129,18 +173,38 @@ ON a.id_cliente = c.id_cliente
 ORDER BY a.id_alquiler DESC
 
 ");
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Alquileres - SportHub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/alquileres.css?v=1">
-<script src="https://kit.fontawesome.com/9d1a86738f.js"></script>
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Alquileres - SportHub</title>
+
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+    >
+
+    <link rel="stylesheet" href="css/reset.css">
+
+    <link
+    rel="stylesheet"
+    href="css/alquileres.css?v=1"
+    >
+
+    <link
+    rel="stylesheet"
+    href="css/mediaqueryspagina.css?v=1"
+    >
+
+    <script
+    src="https://kit.fontawesome.com/9d1a86738f.js">
+    </script>
 
 </head>
 
@@ -149,6 +213,7 @@ ORDER BY a.id_alquiler DESC
 <header class="header">
 
     <div class="menu">
+
         <button id="menu-toggle">
             <i class="fa-solid fa-bars"></i>
         </button>
@@ -156,24 +221,42 @@ ORDER BY a.id_alquiler DESC
         <div class="logo">
             <img src="img/logo_dashboard.png">
         </div>
+
     </div>
 
     <div class="search">
-        <input type="text" placeholder="Buscar...">
+
+        <input
+        type="text"
+        placeholder="Buscar..."
+        >
+
         <i class="fa-solid fa-magnifying-glass"></i>
+
     </div>
 
     <div class="icons">
+
         <button onclick="logout()">
+
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
         </button>
+
     </div>
 
     <div class="user">
 
         <div>
-            <p><b><?php echo $_SESSION['usuario']['nombre']; ?></b></p>
+
+            <p>
+                <b>
+                    <?php echo $_SESSION['usuario']['nombre']; ?>
+                </b>
+            </p>
+
             <small>Administrador</small>
+
         </div>
 
         <img src="img/avatar.png">
@@ -184,232 +267,314 @@ ORDER BY a.id_alquiler DESC
 
 <div class="container">
 
-<!-- SIDEBAR -->
+    <!-- SIDEBAR -->
 
-<aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar">
 
-<ul>
+        <ul>
 
-<li>
-<a href="dashboard.php">
-<i class="fa-solid fa-house"></i>
-<span>Dashboard</span>
-</a>
-</li>
+            <li>
 
-<li>
-<a href="inventario.php">
-<i class="fa-solid fa-box"></i>
-<span>Inventario</span>
-</a>
-</li>
+                <a href="dashboard.php">
 
-<li>
-<a href="alquileres.php">
-<i class="fa-solid fa-calendar"></i>
-<span>Alquileres</span>
-</a>
-</li>
+                    <i class="fa-solid fa-house"></i>
 
-<li>
-<a href="reportes.php">
-<i class="fa-solid fa-chart-line"></i>
-<span>Reportes</span>
-</a>
-</li>
+                    <span>Dashboard</span>
 
-<li>
-<a href="tickets.php">
-<i class="fa-solid fa-ticket"></i>
-<span>Tickets</span>
-</a>
-</li>
+                </a>
 
-<li>
-<a href="clientes.php">
-<i class="fa-solid fa-users"></i>
-<span>Clientes</span>
-</a>
-</li>
+            </li>
 
-<li>
-<a href="configuracion.php">
-<i class="fa-solid fa-gear"></i>
-<span>Configuración</span>
-</a>
-</li>
+            <li>
 
-</ul>
+                <a href="inventario.php">
 
-</aside>
+                    <i class="fa-solid fa-box"></i>
 
-<!-- MAIN -->
+                    <span>Inventario</span>
 
-<main class="main-content">
+                </a>
 
-<h2>GESTIÓN DE ALQUILERES</h2>
+            </li>
 
-<p>Alquila equipamiento y accesorios deportivos a tus clientes.</p>
+            <li>
 
-<div class="alquileres-container">
+                <a href="alquileres.php">
 
-<!-- FORM -->
+                    <i class="fa-solid fa-calendar"></i>
 
-<div class="card-form">
+                    <span>Alquileres</span>
 
-<h3>NUEVO ALQUILER</h3>
+                </a>
 
-<form method="POST">
+            </li>
 
-<input
-type="hidden"
-name="id_alquiler"
-id="id_alquiler"
->
+            <li>
 
-<label>Producto</label>
-<input type="text" name="producto" id="producto" required>
+                <a href="reportes.php">
 
-<label>Cliente</label>
-<input type="text" name="cliente" id="cliente" required>
+                    <i class="fa-solid fa-chart-line"></i>
 
-<div class="row">
+                    <span>Reportes</span>
 
-<div>
-<label>Precio</label>
-<input type="number" name="precio" id="precio" required>
-</div>
+                </a>
 
-<div>
-<label>Cantidad</label>
-<input type="number" name="cantidad" id="cantidad" value="1">
-</div>
+            </li>
 
-</div>
+            <li>
 
-<label>Estado</label>
+                <a href="tickets.php">
 
-<select name="estado" id="estado">
+                    <i class="fa-solid fa-ticket"></i>
 
-<option value="Activo">
-Activo
-</option>
+                    <span>Tickets</span>
 
-<option value="Pendiente">
-Pendiente
-</option>
+                </a>
 
-<option value="Devuelto">
-Devuelto
-</option>
+            </li>
 
-</select>
+            <li>
 
-<button type="submit" name="alquilar" class="btn-alquilar">
-GUARDAR ALQUILER
-</button>
+                <a href="clientes.php">
 
-</form>
+                    <i class="fa-solid fa-users"></i>
 
-</div>
+                    <span>Clientes</span>
 
-<!-- TABLA -->
+                </a>
 
-<div class="card-tabla">
+            </li>
 
-<h3>LISTA DE ALQUILERES</h3>
+            <li>
 
-<div class="tabla-header">
+                <a href="configuracion.php">
 
-<span>ID</span>
-<span>PRODUCTO</span>
-<span>CLIENTE</span>
-<span>ESTADO</span>
-<span>INICIO</span>
-<span>DEVOLUCIÓN</span>
-<span>ACCIONES</span>
+                    <i class="fa-solid fa-gear"></i>
 
-</div>
+                    <span>Configuración</span>
 
-<?php while($a = mysqli_fetch_assoc($alquileres)) { ?>
+                </a>
 
-<div class="fila">
+            </li>
 
-<span>
-#<?php echo $a['id_alquiler']; ?>
-</span>
+        </ul>
 
-<span>
-<?php echo $a['producto']; ?>
-</span>
+    </aside>
 
-<div class="cliente">
-<i class="fa-regular fa-user"></i>
-<?php echo $a['cliente_nombre']; ?>
-</div>
+    <!-- MAIN -->
 
-<span>
-<?php echo $a['estado']; ?>
-</span>
+    <main class="main-content">
 
-<span>
-<?php echo $a['fecha_inicio']; ?>
-</span>
+        <h2>GESTIÓN DE ALQUILERES</h2>
 
-<div class="fecha">
-<i class="fa-regular fa-calendar"></i>
-<?php echo $a['fecha_fin']; ?>
-</div>
+        <p>
+            Alquila equipamiento y accesorios deportivos a tus clientes.
+        </p>
 
-<div class="acciones">
+        <div class="alquileres-container">
 
-<!-- EDITAR -->
-<i
-class="fa-solid fa-pen-to-square editar"
+            <!-- FORM -->
 
-onclick="editarAlquiler(
-'<?php echo $a['id_alquiler']; ?>',
-'<?php echo htmlspecialchars($a['producto'], ENT_QUOTES); ?>',
-'<?php echo htmlspecialchars($a['cliente_nombre'], ENT_QUOTES); ?>',
-'<?php echo $a['total']; ?>',
-'<?php echo $a['estado']; ?>'
-)">
-</i>
+            <div class="card-form">
 
-<!-- ELIMINAR -->
-<i
-class="fa-solid fa-trash eliminar"
+                <h3>NUEVO ALQUILER</h3>
 
-onclick="eliminarAlquiler(
-<?php echo $a['id_alquiler']; ?>
-)">
-</i>
+                <form method="POST">
 
-</div>
+                    <input
+                    type="hidden"
+                    name="id_alquiler"
+                    id="id_alquiler"
+                    >
 
-</div>
+                    <label>Producto</label>
 
-<?php } ?>
+                    <input
+                    type="text"
+                    name="producto"
+                    id="producto"
+                    required
+                    >
 
-</div>
+                    <label>Cliente</label>
 
-</div>
+                    <input
+                    type="text"
+                    name="cliente"
+                    id="cliente"
+                    required
+                    >
 
-</main>
+                    <div class="row">
+
+                        <div>
+
+                            <label>Precio</label>
+
+                            <input
+                            type="number"
+                            name="precio"
+                            id="precio"
+                            required
+                            >
+
+                        </div>
+
+                        <div>
+
+                            <label>Cantidad</label>
+
+                            <input
+                            type="number"
+                            name="cantidad"
+                            id="cantidad"
+                            value="1"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <label>Estado</label>
+
+                    <select name="estado" id="estado">
+
+                        <option value="Activo">
+                            Activo
+                        </option>
+
+                        <option value="Pendiente">
+                            Pendiente
+                        </option>
+
+                        <option value="Devuelto">
+                            Devuelto
+                        </option>
+
+                    </select>
+
+                    <button
+                    type="submit"
+                    name="alquilar"
+                    class="btn-alquilar"
+                    >
+                        GUARDAR ALQUILER
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- TABLA -->
+
+            <div class="card-tabla">
+
+                <h3>LISTA DE ALQUILERES</h3>
+
+                <div class="tabla-header">
+
+                    <span>ID</span>
+                    <span>PRODUCTO</span>
+                    <span>CLIENTE</span>
+                    <span>ESTADO</span>
+                    <span>INICIO</span>
+                    <span>DEVOLUCIÓN</span>
+                    <span>ACCIONES</span>
+
+                </div>
+
+                <?php while($a = mysqli_fetch_assoc($alquileres)) { ?>
+
+                <div class="fila">
+
+                    <span>
+                        #<?php echo $a['id_alquiler']; ?>
+                    </span>
+
+                    <span>
+                        <?php echo $a['producto']; ?>
+                    </span>
+
+                    <div class="cliente">
+
+                        <i class="fa-regular fa-user"></i>
+
+                        <?php echo $a['cliente_nombre']; ?>
+
+                    </div>
+
+                    <span>
+                        <?php echo $a['estado']; ?>
+                    </span>
+
+                    <span>
+                        <?php echo $a['fecha_inicio']; ?>
+                    </span>
+
+                    <div class="fecha">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <?php echo $a['fecha_fin']; ?>
+
+                    </div>
+
+                    <div class="acciones">
+
+                        <!-- EDITAR -->
+
+                        <i
+                        class="fa-solid fa-pen-to-square editar"
+
+                        onclick="editarAlquiler(
+                        '<?php echo $a['id_alquiler']; ?>',
+                        '<?php echo htmlspecialchars($a['producto'], ENT_QUOTES); ?>',
+                        '<?php echo htmlspecialchars($a['cliente_nombre'], ENT_QUOTES); ?>',
+                        '<?php echo $a['total']; ?>',
+                        '<?php echo $a['estado']; ?>'
+                        )">
+                        </i>
+
+                        <!-- ELIMINAR -->
+
+                        <i
+                        class="fa-solid fa-trash eliminar"
+
+                        onclick="eliminarAlquiler(
+                        <?php echo $a['id_alquiler']; ?>
+                        )">
+                        </i>
+
+                    </div>
+
+                </div>
+
+                <?php } ?>
+
+            </div>
+
+        </div>
+
+    </main>
 
 </div>
 
 <footer class="footer">
-<small>Mariajose © 2026</small>
+
+    <small>Mariajose © 2026</small>
+
 </footer>
 
 <script>
 
 function logout(){
-    window.location.href="logout.php";
+
+    window.location.href = "logout.php";
+
 }
 
 const btn = document.getElementById("menu-toggle");
+
 const sidebar = document.getElementById("sidebar");
 
 btn.addEventListener("click",()=>{

@@ -46,8 +46,9 @@ $totalDisponibles = mysqli_fetch_assoc($resDisponibles)['total'] ?? 0;
 ========================= */
 
 $sqlAlquilados = "
-SELECT SUM(stock_total - stock_disponible) as total
-FROM producto
+SELECT COUNT(*) as total
+FROM alquiler
+WHERE estado = 'activo'
 ";
 
 $resAlquilados = mysqli_query($conexion, $sqlAlquilados);
@@ -68,7 +69,7 @@ $resTickets = mysqli_query($conexion, $sqlTickets);
 $totalTickets = mysqli_fetch_assoc($resTickets)['total'] ?? 0;
 
 /* =========================
-    DATOS GRÁFICA ALQUILERES
+DATOS GRÁFICA ALQUILERES
 ========================= */
 
 $datosGrafica = [];
@@ -146,17 +147,18 @@ $resTicketLista = mysqli_query($conexion, $sqlTicketLista);
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Dashboard - SportHub</title>
+    <title>Dashboard - SportHub</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="css/reset.css">
-<link rel="stylesheet" href="css/dashboard.css?v=1">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/dashboard.css?v=1">
+    <link rel="stylesheet" href="css/mediaqueryspagina.css?=3">
 
-<script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -188,7 +190,12 @@ $resTicketLista = mysqli_query($conexion, $sqlTicketLista);
     <div class="user">
 
         <div>
-            <p><b><?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?></b></p>
+            <p>
+                <b>
+                    <?php echo htmlspecialchars($_SESSION['usuario']['nombre']); ?>
+                </b>
+            </p>
+
             <small>Administrador</small>
         </div>
 
@@ -200,140 +207,233 @@ $resTicketLista = mysqli_query($conexion, $sqlTicketLista);
 
 <div class="container">
 
-<aside id="sidebar" class="sidebar">
+    <aside id="sidebar" class="sidebar">
 
-<ul>
+        <ul>
 
-<li><a href="dashboard.php"><i class="fa-solid fa-house"></i><span>Dashboard</span></a></li>
-<li><a href="inventario.php"><i class="fa-solid fa-box"></i><span>Inventario</span></a></li>
-<li><a href="alquileres.php"><i class="fa-solid fa-calendar"></i><span>Alquileres</span></a></li>
-<li><a href="reportes.php"><i class="fa-solid fa-chart-line"></i><span>Reportes</span></a></li>
-<li><a href="tickets.php"><i class="fa-solid fa-ticket"></i><span>Tickets</span></a></li>
-<li><a href="clientes.php"><i class="fa-solid fa-users"></i><span>Clientes</span></a></li>
-<li><a href="configuracion.php"><i class="fa-solid fa-gear"></i><span>Configuración</span></a></li>
+            <li>
+                <a href="dashboard.php">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
 
-</ul>
+            <li>
+                <a href="inventario.php">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Inventario</span>
+                </a>
+            </li>
 
-</aside>
+            <li>
+                <a href="alquileres.php">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Alquileres</span>
+                </a>
+            </li>
 
-<main class="main-content">
+            <li>
+                <a href="reportes.php">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Reportes</span>
+                </a>
+            </li>
 
-<h1>Dashboard</h1>
+            <li>
+                <a href="tickets.php">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>Tickets</span>
+                </a>
+            </li>
 
-<p>Monitoreo general del sistema de inventario y alquileres.</p>
+            <li>
+                <a href="clientes.php">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Clientes</span>
+                </a>
+            </li>
 
-<div class="cards">
+            <li>
+                <a href="configuracion.php">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Configuración</span>
+                </a>
+            </li>
 
-<div class="card-inventario">
-<h3>Inventario Total</h3>
-<p><?php echo $totalProductos; ?> productos</p>
-<i class="fa-solid fa-boxes-stacked"></i>
-</div>
+        </ul>
 
-<div class="card-venta">
-<h3>Stock Disponible</h3>
-<p><?php echo $totalDisponibles; ?> productos</p>
-<i class="fa-solid fa-circle-check"></i>
-</div>
+    </aside>
 
-<div class="card-alquilados">
-<h3>Alquilados</h3>
-<p><?php echo $totalAlquilados; ?> productos</p>
-<i class="fa-regular fa-calendar"></i>
-</div>
+    <main class="main-content">
 
-<div class="card-tickets">
-<h3>Tickets</h3>
-<p><?php echo $totalTickets; ?> registrados</p>
-<i class="fa-solid fa-triangle-exclamation"></i>
-</div>
+        <h1>Dashboard</h1>
 
-</div>
+        <p>
+            Monitoreo general del sistema de inventario y alquileres.
+        </p>
 
-<section class="cards-large">
+        <div class="cards">
 
-<div class="card-large">
-<h3>Actividad de alquileres</h3>
-<small>Últimos 7 días</small>
-<canvas id="graficaVentas"></canvas>
-</div>
+            <div class="card-inventario">
+                <h3>Inventario Total</h3>
+                <p><?php echo $totalProductos; ?> productos</p>
+                <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
 
-<div class="card-large">
+            <div class="card-venta">
+                <h3>Stock Disponible</h3>
+                <p><?php echo $totalDisponibles; ?> productos</p>
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
 
-<h3>Stock bajo</h3>
+            <div class="card-alquilados">
+                <h3>Alquilados</h3>
+                <p><?php echo $totalAlquilados; ?> productos</p>
+                <i class="fa-regular fa-calendar"></i>
+            </div>
 
-<?php while ($stock = mysqli_fetch_assoc($resStock)) { ?>
+            <div class="card-tickets">
+                <h3>Tickets</h3>
+                <p><?php echo $totalTickets; ?> registrados</p>
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
 
-<div class="stock-item">
-<i class="fa-solid fa-box"></i>
-<span><?php echo $stock['nombre']; ?></span>
-<span class="rojo"><?php echo $stock['stock_disponible']; ?></span>
-</div>
+        </div>
 
-<?php } ?>
+        <section class="cards-large">
 
-</div>
+            <div class="card-large">
 
-<div class="card-large">
+                <h3>Actividad de alquileres</h3>
 
-<h3>Tickets recientes</h3>
+                <small>Últimos 7 días</small>
 
-<?php while ($ticket = mysqli_fetch_assoc($resTicketLista)) { ?>
+                <canvas id="graficaVentas"></canvas>
 
-<div class="stock-item">
-<i class="fa-solid fa-ticket"></i>
-<span><?php echo $ticket['descripcion']; ?></span>
-</div>
+            </div>
 
-<?php } ?>
+            <div class="card-large">
 
-</div>
+                <h3>Stock bajo</h3>
 
-</section>
+                <?php while ($stock = mysqli_fetch_assoc($resStock)) { ?>
 
-</main>
+                    <div class="stock-item">
+                        <i class="fa-solid fa-box"></i>
+
+                        <span>
+                            <?php echo $stock['nombre']; ?>
+                        </span>
+
+                        <span class="rojo">
+                            <?php echo $stock['stock_disponible']; ?>
+                        </span>
+                    </div>
+
+                <?php } ?>
+
+            </div>
+
+            <div class="card-large">
+
+                <h3>Tickets recientes</h3>
+
+                <?php while ($ticket = mysqli_fetch_assoc($resTicketLista)) { ?>
+
+                    <div class="stock-item">
+
+                        <i class="fa-solid fa-ticket"></i>
+
+                        <span>
+                            <?php echo $ticket['descripcion']; ?>
+                        </span>
+
+                    </div>
+
+                <?php } ?>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 
 <footer class="footer">
-<small>Mariajose © 2026</small>
+    <small>Mariajose © 2026</small>
 </footer>
 
 <script>
+
 const btn = document.getElementById("menu-toggle");
 const sidebar = document.getElementById("sidebar");
 
 btn.addEventListener("click", () => {
     sidebar.classList.toggle("active");
 });
+
 </script>
 
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
 
-const ctx = document.getElementById('graficaVentas');
+    const ctx = document.getElementById('graficaVentas');
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'],
-        datasets: [{
-            label: 'Alquileres',
-            data: <?php echo json_encode($datosGrafica); ?>,
-            borderColor: '#4a6cf7',
-            backgroundColor: 'rgba(74,108,247,0.1)',
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } }
-    }
+    new Chart(ctx, {
+
+        type: 'line',
+
+        data: {
+
+            labels: [
+                'Lun',
+                'Mar',
+                'Mie',
+                'Jue',
+                'Vie',
+                'Sab',
+                'Dom'
+            ],
+
+            datasets: [{
+
+                label: 'Alquileres',
+
+                data: <?php echo json_encode($datosGrafica); ?>,
+
+                borderColor: '#4a6cf7',
+
+                backgroundColor: 'rgba(74,108,247,0.1)',
+
+                tension: 0.4,
+
+                fill: true
+
+            }]
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
 });
 
-});
 </script>
 
 </body>

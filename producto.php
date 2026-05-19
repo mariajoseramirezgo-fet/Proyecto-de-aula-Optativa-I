@@ -44,7 +44,10 @@ $resultado = mysqli_query($conexion, $sql);
 
 <link rel="stylesheet" href="css/productos.css">
 
-<script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
+<script
+src="https://kit.fontawesome.com/9d1a86738f.js"
+crossorigin="anonymous">
+</script>
 
 </head>
 
@@ -55,11 +58,15 @@ $resultado = mysqli_query($conexion, $sql);
 <div class="menu">
 
 <button id="menu-toggle">
+
 <i class="fa-solid fa-bars"></i>
+
 </button>
 
 <div class="logo">
+
 <img src="img/logo_dashboard.png" alt="logo">
+
 </div>
 
 </div>
@@ -75,13 +82,21 @@ $resultado = mysqli_query($conexion, $sql);
 <div class="icons">
 
 <button>
+
 <i class="fa-regular fa-bell"></i>
+
 </button>
 
-<form method="POST" action="logout.php" style="display:inline;">
+<form
+method="POST"
+action="logout.php"
+style="display:inline;"
+>
 
 <button type="submit">
+
 <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
 </button>
 
 </form>
@@ -93,7 +108,11 @@ $resultado = mysqli_query($conexion, $sql);
 <div>
 
 <p>
-<b><?php echo htmlspecialchars($usuario['nombre']); ?></b>
+
+<b>
+<?php echo htmlspecialchars($usuario['nombre']); ?>
+</b>
+
 </p>
 
 <small>Usuario tienda</small>
@@ -109,36 +128,57 @@ $resultado = mysqli_query($conexion, $sql);
 <div class="container">
 
 <!-- SIDEBAR -->
+
 <aside id="sidebar" class="sidebar">
 
 <ul>
 
 <li>
+
 <a href="userinicio.php">
+
 <i class="fa-solid fa-house"></i>
+
 <span>Inicio</span>
+
 </a>
+
 </li>
 
 <li>
+
 <a href="producto.php">
+
 <i class="fa-solid fa-box"></i>
+
 <span>Productos</span>
+
 </a>
+
 </li>
 
 <li>
+
 <a href="alquileruser.php">
+
 <i class="fa-solid fa-calendar"></i>
+
 <span>Alquiler</span>
+
 </a>
+
 </li>
 
 <li>
+
 <a href="configuracionuser.php">
+
 <i class="fa-solid fa-gear"></i>
+
 <span>Configuración</span>
+
 </a>
+
 </li>
 
 </ul>
@@ -146,12 +186,15 @@ $resultado = mysqli_query($conexion, $sql);
 </aside>
 
 <!-- CONTENIDO -->
+
 <main class="main-content">
 
 <h1>Productos</h1>
 
 <p>
+
 Explora nuestra selección de productos
+
 </p>
 
 <div class="productos-grid">
@@ -159,27 +202,46 @@ Explora nuestra selección de productos
 <?php
 if(mysqli_num_rows($resultado) > 0){
 
-while($producto = mysqli_fetch_assoc($resultado)){
+    while($producto = mysqli_fetch_assoc($resultado)){
 
-$imagen = !empty($producto['imagen']) ? $producto['imagen'] : "avatar.png";
+        $imagen = !empty($producto['imagen'])
+        ? $producto['imagen']
+        : "avatar.png";
 ?>
 
-<div class="producto"
-onclick="verProducto(<?php echo $producto['id_producto']; ?>)">
+<div
+class="producto"
+onclick="verProducto(<?php echo $producto['id_producto']; ?>)"
+>
 
-<img src="img/<?php echo $imagen; ?>" alt="producto">
+<img
+src="img/<?php echo $imagen; ?>"
+alt="producto"
+>
 
 <h3>
+
 <?php echo htmlspecialchars($producto['nombre']); ?>
+
 </h3>
 
 <p>
-$<?php echo number_format($producto['precio_alquiler'], 0, ',', '.'); ?>
+
+$<?php
+echo number_format(
+    $producto['precio_alquiler'],
+    0,
+    ',',
+    '.'
+);
+?>
+
 </p>
 
 <small>
 
 Stock disponible:
+
 <?php echo $producto['stock_disponible']; ?>
 
 </small>
@@ -187,7 +249,7 @@ Stock disponible:
 </div>
 
 <?php
-}
+    }
 
 }else{
 ?>
@@ -203,7 +265,9 @@ Stock disponible:
 </div>
 
 <footer class="footer">
+
 <small>Mariajose © 2026</small>
+
 </footer>
 
 <script>
@@ -211,23 +275,27 @@ Stock disponible:
 /* =========================
    SIDEBAR
 ========================= */
-const btn = document.getElementById("menu-toggle");
 
-const sidebar = document.getElementById("sidebar");
+const btn =
+document.getElementById("menu-toggle");
+
+const sidebar =
+document.getElementById("sidebar");
 
 btn.addEventListener("click", ()=>{
 
-sidebar.classList.toggle("active");
+    sidebar.classList.toggle("active");
 
 });
 
 /* =========================
    VER PRODUCTO
 ========================= */
+
 function verProducto(id){
 
-window.location.href =
-      "productodetalle.php?id=" + id;
+    window.location.href =
+    "productodetalle.php?id=" + id;
 
 }
 

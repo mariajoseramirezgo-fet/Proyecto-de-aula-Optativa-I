@@ -75,6 +75,13 @@ body{
     color:#000;
 }
 
+/* USER */
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
 /* CONTENEDOR DE TEXTO */
 .user div{
     display:flex;
@@ -101,6 +108,11 @@ body{
     border-radius:50%;
     object-fit:cover;
 }
+/* LAYOUT */
+.container{
+    display:flex;
+}
+
 /* LAYOUT */
 .container{
     display:flex;

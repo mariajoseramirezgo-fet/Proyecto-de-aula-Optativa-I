@@ -107,7 +107,7 @@ while($fila = mysqli_fetch_assoc($queryGrafica)){
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/reportes.css?v=2">
+    <link rel="stylesheet" href="css/reportes.css?v=1">
     <link rel="stylesheet" href="css/mediaqueryspagina.css?v=2">
     <script src="https://kit.fontawesome.com/9d1a86738f.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

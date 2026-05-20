@@ -221,7 +221,7 @@ $notificaciones = mysqli_query(
     <title>Configuración - SportHub</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"href="css/configuracion.css?v=1.0">
+    <link rel="stylesheet"href="css/configuracion.css?v=2">
     <link rel="stylesheet" href="css/mediaquerystickets.css?=1">
     <script src="https://kit.fontawesome.com/9d1a86738f.js"crossorigin="anonymous"></script>
 
